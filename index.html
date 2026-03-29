@@ -26,7 +26,7 @@
   }
 
   #chatbox {
-    height: 250px; /* smaller and cleaner */
+    height: 250px;
     overflow-y: auto;
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -61,13 +61,13 @@
   }
 
   .user {
-    color: #000; /* black for user messages */
+    color: #000;
     margin: 5px 0;
     text-align: right;
   }
 
   .bot {
-    color: #000; /* black for bot messages */
+    color: #000;
     margin: 5px 0;
     text-align: left;
   }
@@ -90,13 +90,13 @@
 <script>
 window.onload = function() {
 
-  let chatbox = document.getElementById('chatbox');
-  let userInput = document.getElementById('userInput');
-  let sendBtn = document.getElementById('sendBtn');
+  const chatbox = document.getElementById('chatbox');
+  const userInput = document.getElementById('userInput');
+  const sendBtn = document.getElementById('sendBtn');
 
   let faq = [];
 
-  // ✅ Load FAQ JSON
+  // Load FAQ JSON
   fetch('https://raw.githubusercontent.com/mariedarasphd/chatbot/main/faq.json')
     .then(response => response.json())
     .then(data => {
@@ -109,44 +109,53 @@ window.onload = function() {
       console.error(err);
     });
 
-  // ✅ Smart matching function
+  // Smarter matching function
   function findAnswer(userQuestion) {
-    userQuestion = userQuestion.toLowerCase();
+    userQuestion = userQuestion.toLowerCase().trim();
+    let bestMatch = null;
+    let maxScore = 0;
 
     for (let item of faq) {
       let questions = Array.isArray(item.question) ? item.question : [item.question];
 
       for (let q of questions) {
         let qLower = q.toLowerCase();
+        let score = 0;
 
-        if (
-          userQuestion.includes(qLower) ||
-          qLower.includes(userQuestion) ||
-          userQuestion.split(" ").some(word => qLower.includes(word))
-        ) {
-          return item.answer;
+        // Count matching words
+        qLower.split(" ").forEach(word => {
+          if (userQuestion.includes(word)) score++;
+        });
+
+        if (score > maxScore) {
+          maxScore = score;
+          bestMatch = item.answer;
         }
       }
     }
 
-    return "I don't have that answer yet. Please use the contact form.";
+    // Require at least one matching word to return an answer
+    if (maxScore === 0) {
+      return "I don't have that answer yet. Please use the contact form.";
+    }
+
+    return bestMatch;
   }
 
-  // ✅ Send button
+  // Send button logic
   sendBtn.addEventListener('click', () => {
-    let userText = userInput.value.trim();
+    const userText = userInput.value.trim();
     if (!userText) return;
 
     chatbox.innerHTML += `<div class="user"><strong>You:</strong> ${userText}</div>`;
     userInput.value = '';
 
-    let answer = findAnswer(userText);
-
+    const answer = findAnswer(userText);
     chatbox.innerHTML += `<div class="bot"><strong>Bot:</strong> ${answer}</div>`;
     chatbox.scrollTop = chatbox.scrollHeight;
   });
 
-  // ✅ Enter key support
+  // Enter key support
   userInput.addEventListener("keypress", function(e) {
     if (e.key === "Enter") {
       sendBtn.click();
