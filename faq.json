@@ -1,90 +1,90 @@
 [
   {
-    "question": ["Welcome", "Hello", "Hi", "Greetings"],
+    "question": ["Welcome", "Hello", "Hi", "Greetings", "Hey", "Good morning", "Good afternoon", "Good evening"],
     "answer": "Welcome to Marie Daras LLC."
   },
   {
-    "question": ["How do I schedule?", "How can I book a meeting?", "How do I get on your calendar?"],
+    "question": ["How do I schedule?", "How can I book a meeting?", "How do I get on your calendar?", "Schedule a call", "Book appointment", "Set up a meeting", "When can I meet"],
     "answer": "The schedule button takes you to Dawn Daras' calendar or alternatively you can click here: https://docs.google.com/forms/d/e/1FAIpQLSecD2LdV2-rGMR-wQJ3kQPxUfPr3BD1pjXRXuo6ZpISyu84g/viewform?usp=publish-editor to access a contact form."
   },
   {
-    "question": ["What is data science?", "Explain data science", "Can you define data science?"],
+    "question": ["What is data science?", "Explain data science", "Can you define data science?", "Data analytics", "Data modeling", "Data insights", "Data analysis"],
     "answer": "Data science uses math and programming to extract meaningful insights from data — structured and unstructured — to solve real-world business problems."
   },
   {
-    "question": ["What is AI?", "Explain AI", "Can you define artificial intelligence?"],
+    "question": ["What is AI?", "Explain AI", "Can you define artificial intelligence?", "Artificial intelligence", "Machine intelligence"],
     "answer": "AI is the capability of computers and machines to perform tasks that typically require human intelligence, such as learning, reasoning, problem-solving, and decision-making."
   },
   {
-    "question": ["What is machine learning?", "Explain machine learning", "Can you define ML?"],
+    "question": ["What is machine learning?", "Explain machine learning", "Can you define ML?", "ML", "Predictive modeling", "Learning algorithms"],
     "answer": "Machine learning is a powerful technology that enables computers to learn from data and improve performance over time. It is a subset of artificial intelligence (AI)."
   },
   {
-    "question": ["What fields can you build software in?", "What industries do you work with for software?", "Where can you develop software?"],
+    "question": ["What fields can you build software in?", "What industries do you work with for software?", "Where can you develop software?", "Software solutions", "Applications", "Software projects"],
     "answer": "Marie Daras LLC specializes in fraud detection but can build solutions in consumer goods, retail, healthcare, and others. Scheduling a short call helps determine if we are a good fit."
   },
   {
-    "question": ["What fields can you build data science models in?", "Industries for data science?", "Where can you apply data science?"],
+    "question": ["What fields can you build data science models in?", "Industries for data science?", "Where can you apply data science?", "Data projects", "Analytics solutions", "Predictive models"],
     "answer": "Marie Daras LLC specializes in fraud detection but can build solutions in consumer goods, retail, healthcare, and others. Scheduling a short call helps determine if we are a good fit."
   },
   {
-    "question": ["Do you do database design?", "Can you design databases?", "Database design services?"],
+    "question": ["Do you do database design?", "Can you design databases?", "Database design services?", "Databases", "DB setup", "Database architecture"],
     "answer": "No, I focus on software, analytics, and web development. Full-scale database design is outside my services."
   },
   {
-    "question": ["How long does a project take?", "Project timeline?", "Project length?"],
+    "question": ["How long does a project take?", "Project timeline?", "Project length?", "Duration of project", "Timeline", "Time to complete"],
     "answer": "We have two options: a 6–8 week project with deliverables at each checkpoint, or a 1–2 week flash modeling activity where we diagnose your data systems and describe the 'art of the possible' for your company. Learn more here: https://youtu.be/mqQeeiViRoI?si=pofxAqQGY30AuWdh"
   },
   {
-    "question": ["What is your business process?", "How do you work?", "Describe your process"],
+    "question": ["What is your business process?", "How do you work?", "Describe your process", "Workflow", "Project approach", "Methodology"],
     "answer": "We have two options: a 6–8 week project with deliverables at each checkpoint, or a 1–2 week flash modeling activity where we diagnose your data systems and describe the 'art of the possible' for your company. Learn more here: https://youtu.be/mqQeeiViRoI?si=pofxAqQGY30AuWdh"
   },
   {
-    "question": ["Can you integrate software with existing systems?", "Software integration?", "Connect software to my systems?"],
+    "question": ["Can you integrate software with existing systems?", "Software integration?", "Connect software to my systems?", "Connect tools", "System integration", "API connection"],
     "answer": "Yes, I specialize in connecting software, websites, and analytics tools to work seamlessly with existing business systems."
   },
   {
-    "question": ["Do you provide ongoing maintenance for websites or software?", "Maintenance services?", "Support for software and websites?"],
+    "question": ["Do you provide ongoing maintenance for websites or software?", "Maintenance services?", "Support for software and websites?", "Updates", "Tech support", "Continuous support"],
     "answer": "Yes, I offer ongoing support and updates to ensure your systems and websites continue to function smoothly."
   },
   {
-    "question": ["Do you do IT infrastructure setup?", "IT setup services?", "Can you manage my IT infrastructure?"],
+    "question": ["Do you do IT infrastructure setup?", "IT setup services?", "Can you manage my IT infrastructure?", "Network setup", "IT installation"],
     "answer": "No, I focus on software, web, and analytics services, not on full-scale IT infrastructure or networking."
   },
   {
-    "question": ["What is your price structure?", "How much do you charge?", "Cost?"],
+    "question": ["What is your price structure?", "How much do you charge?", "Cost?", "Fees", "Pricing", "Rates"],
     "answer": "I work by a Statement of Work (SOW), priced by project or by hours. You will receive an SOW separate from your contract explaining exactly what to expect at each checkpoint with a payment schedule."
   },
   {
-    "question": ["What languages do you program in?", "Programming languages?", "Which languages can you code in?"],
+    "question": ["What languages do you program in?", "Programming languages?", "Which languages can you code in?", "Coding languages", "Development languages"],
     "answer": "R, Python, SQL, Scala, HTML, Java, CSS, JSON-LD, and others as needed."
   },
   {
-    "question": ["What platforms do you use?", "Software platforms?", "Which platforms can you work with?"],
+    "question": ["What platforms do you use?", "Software platforms?", "Which platforms can you work with?", "Tools", "BI platforms", "Analytics platforms"],
     "answer": "We are familiar with most BI and analytics platforms and can adjust to your environment."
   },
   {
-    "question": ["Do you have project references?", "Project references?"],
+    "question": ["Do you have project references?", "Project references?", "Can I see examples?", "Past work", "Portfolio"],
     "answer": "Yes, I can provide project references upon request."
   },
   {
-    "question": ["Can you help in retail?", "Retail solutions?"],
+    "question": ["Can you help in retail?", "Retail solutions?", "Retail industry", "Consumer goods"],
     "answer": "Marie Daras LLC specializes in fraud detection but can build solutions in consumer goods, retail, healthcare, and others. Scheduling a short call helps determine if we are a good fit."
   },
   {
-    "question": ["Can you help in healthcare?", "Healthcare solutions?"],
+    "question": ["Can you help in healthcare?", "Healthcare solutions?", "Medical industry", "Healthcare projects"],
     "answer": "Marie Daras LLC specializes in fraud detection but can build solutions in consumer goods, retail, healthcare, and others. Scheduling a short call helps determine if we are a good fit."
   },
   {
-    "question": ["Can you help in CPG?", "CPG solutions?"],
+    "question": ["Can you help in CPG?", "CPG solutions?", "Consumer packaged goods", "CPG industry"],
     "answer": "Marie Daras LLC specializes in fraud detection but can build solutions in consumer goods, retail, healthcare, and others. Scheduling a short call helps determine if we are a good fit."
   },
   {
-    "question": ["Can you help in marketing?", "Marketing solutions?"],
+    "question": ["Can you help in marketing?", "Marketing solutions?", "Marketing projects", "Advertising"],
     "answer": "Marie Daras LLC specializes in fraud detection but can build solutions in consumer goods, retail, healthcare, and others. Scheduling a short call helps determine if we are a good fit."
   },
   {
-    "question": ["How long does it take to build a website?", "Website timeline?", "Website project duration?"],
+    "question": ["How long does it take to build a website?", "Website timeline?", "Website project duration?", "Website development", "Site build time", "Web design duration"],
     "answer": "A basic two-page website typically takes about one week to build. Additional services such as custom SEO, content creation, and domain configuration are available as add-ons."
   }
 ]
