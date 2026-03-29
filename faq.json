@@ -1,0 +1,66 @@
+[
+  {
+    "question": "Welcome",
+    "answer": "Welcome to Marie Daras LLC."
+  },
+  {
+    "question": "How do I schedule?",
+    "answer": "The schedule button takes you to Dawn Daras' calendar or alternatively you can click here: https://docs.google.com/forms/d/e/1FAIpQLSecD2LdV2-rGMR-wQJ3kQPxUfPr3BD1pjXRXuo6ZpISyu84g/viewform?usp=publish-editor to access a contact form."
+  },
+  {
+    "question": "What is data science?",
+    "answer": "Data science uses math and programming to extract meaningful insights from structured and unstructured data to solve real-world business problems."
+  },
+  {
+    "question": "What is AI?",
+    "answer": "AI is the capability of computers and machines to perform tasks that typically require human intelligence, such as learning, reasoning, problem-solving, and decision-making."
+  },
+  {
+    "question": "What is machine learning?",
+    "answer": "Machine learning is a powerful technology that enables computers to learn from data and improve their performance over time. It is a subset of artificial intelligence (AI)."
+  },
+  {
+    "question": "What fields can you build software in?",
+    "answer": "Marie Daras LLC specializes in fraud detection but can build solutions in consumer goods, retail, healthcare, and others. Scheduling a short call helps determine if we are a good fit."
+  },
+  {
+    "question": "What fields can you build data science models in?",
+    "answer": "Marie Daras LLC specializes in fraud detection but can build solutions in consumer goods, retail, healthcare, and others. Scheduling a short call helps determine if we are a good fit."
+  },
+  {
+    "question": "Do you do database design?",
+    "answer": "No, I focus on software, analytics, and web development. Full-scale database design is outside my services."
+  },
+  {
+    "question": "How long does a project take?",
+    "answer": "We have two options: a 6–8 week project with deliverables at each checkpoint, or a 1–2 week flash modeling activity where we diagnose your data systems and describe the 'art of the possible' for your company. Learn more here: https://youtu.be/mqQeeiViRoI?si=pofxAqQGY30AuWdh"
+  },
+  {
+    "question": "What is your business process?",
+    "answer": "We have two options: a 6–8 week project with deliverables at each checkpoint, or a 1–2 week flash modeling activity where we diagnose your data systems and describe the 'art of the possible' for your company. Learn more here: https://youtu.be/mqQeeiViRoI?si=pofxAqQGY30AuWdh"
+  },
+  {
+    "question": "Can you integrate software with existing systems?",
+    "answer": "Yes, I specialize in connecting software, websites, and analytics tools to work seamlessly with existing business systems."
+  },
+  {
+    "question": "Do you provide ongoing maintenance for websites or software?",
+    "answer": "Yes, I offer ongoing support and updates to ensure your systems and websites continue to function smoothly."
+  },
+  {
+    "question": "Do you do IT infrastructure setup?",
+    "answer": "No, I focus on software, web, and analytics services, not on full-scale IT infrastructure or networking."
+  },
+  {
+    "question": "What is your price structure?",
+    "answer": "I work by a Statement of Work (SOW), which can be priced per project or by hours. You will receive an SOW separate from your contract explaining exactly what to expect at each checkpoint with a payment schedule."
+  },
+  {
+    "question": "What languages do you program in?",
+    "answer": "R, Python, SQL, Scala, HTML, Java, CSS, JSON-LD, and others as needed."
+  },
+  {
+    "question": "What platforms do you use?",
+    "answer": "We are familiar with most BI and analytics platforms and can adjust to your environment."
+  }
+]
