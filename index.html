@@ -61,7 +61,7 @@
   }
 
   .user {
-    color: #000;
+    color: #0000ff;
     margin: 5px 0;
     text-align: right;
   }
@@ -109,36 +109,38 @@ window.onload = function() {
       console.error(err);
     });
 
-  // Smarter matching function
+  // Robust matching function
   function findAnswer(userQuestion) {
     userQuestion = userQuestion.toLowerCase().trim();
     let bestMatch = null;
-    let maxScore = 0;
+    let bestScore = 0;
 
     for (let item of faq) {
       let questions = Array.isArray(item.question) ? item.question : [item.question];
 
       for (let q of questions) {
-        let qLower = q.toLowerCase();
-        let score = 0;
+        let qLower = q.toLowerCase().trim();
+        const userWords = userQuestion.split(/\s+/);
+        const faqWords = qLower.split(/\s+/);
 
-        // Count matching words
-        qLower.split(" ").forEach(word => {
-          if (userQuestion.includes(word)) score++;
-        });
+        // Count exact word matches
+        let score = userWords.reduce((acc, word) => {
+          return acc + (faqWords.includes(word) ? 1 : 0);
+        }, 0);
 
-        if (score > maxScore) {
-          maxScore = score;
+        // Boost score if full phrase matches
+        if (qLower.includes(userQuestion) || userQuestion.includes(qLower)) {
+          score += 5;
+        }
+
+        if (score > bestScore) {
+          bestScore = score;
           bestMatch = item.answer;
         }
       }
     }
 
-    // Require at least one matching word to return an answer
-    if (maxScore === 0) {
-      return "I don't have that answer yet. Please use the contact form.";
-    }
-
+    if (bestScore === 0) return "I don't have that answer yet. Please use the contact form.";
     return bestMatch;
   }
 
