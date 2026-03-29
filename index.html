@@ -5,19 +5,72 @@
 <title>Chatbot</title>
 
 <style>
-  body { font-family: Arial, sans-serif; }
-  #chatbox {
-    width: 100%;
-    max-width: 400px;
-    height: 400px;
-    border: 1px solid #ccc;
-    padding: 10px;
-    overflow-y: scroll;
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #E6F7F7; /* very light Tiffany blue */
+    margin: 0;
+    padding: 20px;
   }
-  #userInput { width: 75%; }
-  #sendBtn { width: 20%; }
-  .user { color: blue; margin: 5px 0; }
-  .bot { color: green; margin: 5px 0; }
+
+  h3 {
+    color: #000;
+    margin-bottom: 15px;
+  }
+
+  #chat-container {
+    max-width: 420px;
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+
+  #chatbox {
+    height: 250px; /* smaller and cleaner */
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+    background: #fafafa;
+  }
+
+  #input-area {
+    display: flex;
+    gap: 8px;
+  }
+
+  #userInput {
+    flex: 1;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  }
+
+  #sendBtn {
+    padding: 8px 12px;
+    background-color: #0ABAB5; /* Tiffany blue */
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+
+  #sendBtn:hover {
+    background-color: #089e9a;
+  }
+
+  .user {
+    color: #000; /* black for user messages */
+    margin: 5px 0;
+    text-align: right;
+  }
+
+  .bot {
+    color: #000; /* black for bot messages */
+    margin: 5px 0;
+    text-align: left;
+  }
 </style>
 </head>
 
@@ -25,10 +78,14 @@
 
 <h3>Ask Me About My Services</h3>
 
-<div id="chatbox"></div>
+<div id="chat-container">
+  <div id="chatbox"></div>
 
-<input type="text" id="userInput" placeholder="Type a question..." />
-<button id="sendBtn">Send</button>
+  <div id="input-area">
+    <input type="text" id="userInput" placeholder="Type a question..." />
+    <button id="sendBtn">Send</button>
+  </div>
+</div>
 
 <script>
 window.onload = function() {
@@ -39,12 +96,12 @@ window.onload = function() {
 
   let faq = [];
 
-  // ✅ LOAD YOUR JSON
+  // ✅ Load FAQ JSON
   fetch('https://raw.githubusercontent.com/mariedarasphd/chatbot/main/faq.json')
     .then(response => response.json())
     .then(data => {
       faq = data;
-      chatbox.innerHTML += "<div class='bot'>Chatbot is ready. Ask me a question.</div>";
+      chatbox.innerHTML += "<div class='bot'>Hi — ask me anything about services.</div>";
       console.log("FAQ loaded:", faq);
     })
     .catch(err => {
@@ -52,7 +109,7 @@ window.onload = function() {
       console.error(err);
     });
 
-  // ✅ SMART MATCHING FUNCTION
+  // ✅ Smart matching function
   function findAnswer(userQuestion) {
     userQuestion = userQuestion.toLowerCase();
 
@@ -75,7 +132,7 @@ window.onload = function() {
     return "I don't have that answer yet. Please use the contact form.";
   }
 
-  // ✅ SEND BUTTON
+  // ✅ Send button
   sendBtn.addEventListener('click', () => {
     let userText = userInput.value.trim();
     if (!userText) return;
@@ -89,7 +146,7 @@ window.onload = function() {
     chatbox.scrollTop = chatbox.scrollHeight;
   });
 
-  // ✅ ENTER KEY SUPPORT
+  // ✅ Enter key support
   userInput.addEventListener("keypress", function(e) {
     if (e.key === "Enter") {
       sendBtn.click();
