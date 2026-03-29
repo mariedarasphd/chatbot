@@ -5,7 +5,7 @@
   },
   {
     "question": ["How do I schedule?", "How can I book a meeting?", "How do I get on your calendar?"],
-    "answer": "The schedule button takes you to Dawn Daras' calendar or alternatively you can click here: https://docs.google.com/forms/d/e/1FAIpQLSecD2LdV2-rGMR-wQJg3kQPxUfPr3BD1pjXRXuo6ZpISyu84g/viewform?usp=publish-editor to access a contact form."
+    "answer": "The schedule button takes you to Dawn Daras' calendar or alternatively you can click here: https://docs.google.com/forms/d/e/1FAIpQLSecD2LdV2-rGMR-wQJ3kQPxUfPr3BD1pjXRXuo6ZpISyu84g/viewform?usp=publish-editor to access a contact form."
   },
   {
     "question": ["What is data science?", "Explain data science", "Can you define data science?"],
@@ -82,5 +82,9 @@
   {
     "question": ["Can you help in marketing?", "Marketing solutions?"],
     "answer": "Marie Daras LLC specializes in fraud detection but can build solutions in consumer goods, retail, healthcare, and others. Scheduling a short call helps determine if we are a good fit."
+  },
+  {
+    "question": ["How long does it take to build a website?", "Website timeline?", "Website project duration?"],
+    "answer": "A basic two-page website typically takes about one week to build. Additional services such as custom SEO, content creation, and domain configuration are available as add-ons."
   }
 ]
