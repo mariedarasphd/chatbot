@@ -5,11 +5,11 @@
   },
   {
     "question": ["How do I schedule?", "How can I book a meeting?", "How do I get on your calendar?"],
-    "answer": "The schedule button takes you to Dawn Daras' calendar or alternatively you can click here: https://docs.google.com/forms/d/e/1FAIpQLSecD2LdV2-rGMR-wQJ3kQPxUfPr3BD1pjXRXuo6ZpISyu84g/viewform?usp=publish-editor to access a contact form."
+    "answer": "The schedule button takes you to Dawn Daras' calendar or alternatively you can click here: https://docs.google.com/forms/d/e/1FAIpQLSecD2LdV2-rGMR-wQJg3kQPxUfPr3BD1pjXRXuo6ZpISyu84g/viewform?usp=publish-editor to access a contact form."
   },
   {
     "question": ["What is data science?", "Explain data science", "Can you define data science?"],
-    "answer": "Data science uses math and programming to extract meaningful insights from structured and unstructured data to solve real-world business problems."
+    "answer": "Data science uses math and programming to extract meaningful insights from data — structured and unstructured — to solve real-world business problems."
   },
   {
     "question": ["What is AI?", "Explain AI", "Can you define artificial intelligence?"],
@@ -17,14 +17,14 @@
   },
   {
     "question": ["What is machine learning?", "Explain machine learning", "Can you define ML?"],
-    "answer": "Machine learning is a powerful technology that enables computers to learn from data and improve their performance over time. It is a subset of artificial intelligence (AI)."
+    "answer": "Machine learning is a powerful technology that enables computers to learn from data and improve performance over time. It is a subset of artificial intelligence (AI)."
   },
   {
     "question": ["What fields can you build software in?", "What industries do you work with for software?", "Where can you develop software?"],
     "answer": "Marie Daras LLC specializes in fraud detection but can build solutions in consumer goods, retail, healthcare, and others. Scheduling a short call helps determine if we are a good fit."
   },
   {
-    "question": ["What fields can you build data science models in?", "What industries for data science?", "Where can you apply data science?"],
+    "question": ["What fields can you build data science models in?", "Industries for data science?", "Where can you apply data science?"],
     "answer": "Marie Daras LLC specializes in fraud detection but can build solutions in consumer goods, retail, healthcare, and others. Scheduling a short call helps determine if we are a good fit."
   },
   {
@@ -32,7 +32,7 @@
     "answer": "No, I focus on software, analytics, and web development. Full-scale database design is outside my services."
   },
   {
-    "question": ["How long does a project take?", "Project timeline?", "How long to complete a project?"],
+    "question": ["How long does a project take?", "Project timeline?", "Project length?"],
     "answer": "We have two options: a 6–8 week project with deliverables at each checkpoint, or a 1–2 week flash modeling activity where we diagnose your data systems and describe the 'art of the possible' for your company. Learn more here: https://youtu.be/mqQeeiViRoI?si=pofxAqQGY30AuWdh"
   },
   {
@@ -52,8 +52,8 @@
     "answer": "No, I focus on software, web, and analytics services, not on full-scale IT infrastructure or networking."
   },
   {
-    "question": ["What is your price structure?", "How much do you charge?", "Fees and pricing?"],
-    "answer": "I work by a Statement of Work (SOW), which can be priced per project or by hours. You will receive an SOW separate from your contract explaining exactly what to expect at each checkpoint with a payment schedule."
+    "question": ["What is your price structure?", "How much do you charge?", "Cost?"],
+    "answer": "I work by a Statement of Work (SOW), priced by project or by hours. You will receive an SOW separate from your contract explaining exactly what to expect at each checkpoint with a payment schedule."
   },
   {
     "question": ["What languages do you program in?", "Programming languages?", "Which languages can you code in?"],
@@ -62,5 +62,25 @@
   {
     "question": ["What platforms do you use?", "Software platforms?", "Which platforms can you work with?"],
     "answer": "We are familiar with most BI and analytics platforms and can adjust to your environment."
+  },
+  {
+    "question": ["Do you have project references?", "Project references?"],
+    "answer": "Yes, I can provide project references upon request."
+  },
+  {
+    "question": ["Can you help in retail?", "Retail solutions?"],
+    "answer": "Marie Daras LLC specializes in fraud detection but can build solutions in consumer goods, retail, healthcare, and others. Scheduling a short call helps determine if we are a good fit."
+  },
+  {
+    "question": ["Can you help in healthcare?", "Healthcare solutions?"],
+    "answer": "Marie Daras LLC specializes in fraud detection but can build solutions in consumer goods, retail, healthcare, and others. Scheduling a short call helps determine if we are a good fit."
+  },
+  {
+    "question": ["Can you help in CPG?", "CPG solutions?"],
+    "answer": "Marie Daras LLC specializes in fraud detection but can build solutions in consumer goods, retail, healthcare, and others. Scheduling a short call helps determine if we are a good fit."
+  },
+  {
+    "question": ["Can you help in marketing?", "Marketing solutions?"],
+    "answer": "Marie Daras LLC specializes in fraud detection but can build solutions in consumer goods, retail, healthcare, and others. Scheduling a short call helps determine if we are a good fit."
   }
 ]
