@@ -3,27 +3,105 @@
 <head>
 <meta charset="UTF-8">
 <title>Chatbot</title>
+
 <style>
-  body { font-family: Arial, sans-serif; background-color: #E6F7F7; margin: 0; padding: 20px; }
-  h3 { color: #000; margin-bottom: 15px; }
-  #chat-container { max-width: 420px; background: #fff; border-radius: 12px; padding: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-  #chatbox { height: 250px; overflow-y: auto; border: 1px solid #ddd; border-radius: 8px; padding: 10px; margin-bottom: 10px; background: #fafafa; }
-  #input-area { display: flex; gap: 8px; }
-  #userInput { flex: 1; padding: 8px; border-radius: 6px; border: 1px solid #ccc; }
-  #sendBtn { padding: 8px 12px; background-color: #0ABAB5; color: white; border: none; border-radius: 6px; cursor: pointer; }
-  #sendBtn:hover { background-color: #089e9a; }
-  .user { color: #0000ff; margin: 5px 0; text-align: right; }
-  .bot { color: #000; margin: 5px 0; text-align: left; }
-  .bot-button { display: inline-block; margin-top: 8px; margin-right: 6px; padding: 8px 12px; background-color: #0ABAB5; color: #fff; text-decoration: none; border-radius: 6px; font-size: 14px; }
-  .bot-button:hover { background-color: #089e9a; }
-  .typing { font-style: italic; color: #777; }
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #E6F7F7;
+    margin: 0;
+    padding: 20px;
+  }
+
+  h3 {
+    color: #000;
+    margin-bottom: 15px;
+  }
+
+  #chat-container {
+    max-width: 420px;
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+
+  #chatbox {
+    height: 250px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+    background: #fafafa;
+  }
+
+  #input-area {
+    display: flex;
+    gap: 8px;
+  }
+
+  #userInput {
+    flex: 1;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  }
+
+  #sendBtn {
+    padding: 8px 12px;
+    background-color: #0ABAB5;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+
+  #sendBtn:hover {
+    background-color: #089e9a;
+  }
+
+  .user {
+    color: #0000ff;
+    margin: 5px 0;
+    text-align: right;
+  }
+
+  .bot {
+    color: #000;
+    margin: 5px 0;
+    text-align: left;
+  }
+
+  .bot-button {
+    display: inline-block;
+    margin-top: 8px;
+    margin-right: 6px;
+    padding: 8px 12px;
+    background-color: #0ABAB5;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 14px;
+  }
+
+  .bot-button:hover {
+    background-color: #089e9a;
+  }
+
+  .typing {
+    font-style: italic;
+    color: #777;
+  }
 </style>
 </head>
+
 <body>
 
 <h3>Ask Me About My Services</h3>
+
 <div id="chat-container">
   <div id="chatbox"></div>
+
   <div id="input-area">
     <input type="text" id="userInput" placeholder="Type a question..." />
     <button id="sendBtn">Send</button>
@@ -41,18 +119,28 @@ window.onload = function() {
 
   function loadFAQ() {
     if (faqLoaded) return;
-    fetch('https://raw.githubusercontent.com/mariedarasphd/chatbot/main/faq.json', { cache: "force-cache" })
+
+    fetch('https://raw.githubusercontent.com/mariedarasphd/chatbot/main/faq.json', {
+      cache: "force-cache"
+    })
       .then(response => response.json())
-      .then(data => { faq = data; faqLoaded = true; chatbox.innerHTML += "<div class='bot'>Hi — ask me anything about services.</div>"; })
-      .catch(() => { chatbox.innerHTML += "<div class='bot'>Error loading knowledge base.</div>"; });
+      .then(data => {
+        faq = data;
+        faqLoaded = true;
+        chatbox.innerHTML += "<div class='bot'>Hi — ask me anything about services.</div>";
+      })
+      .catch(() => {
+        chatbox.innerHTML += "<div class='bot'>Error loading knowledge base.</div>";
+      });
   }
 
+  // Simplified: lowercase, remove punctuation, trim
   function normalize(text) {
-    return text.toLowerCase().replace(/[^\w\s]/g, '').trim();
+    return text.toLowerCase().replace(/[^\w\s]/gi, '').trim();
   }
 
   function findAnswer(userQuestion) {
-    const userNorm = normalize(userQuestion);
+    const uNorm = normalize(userQuestion);
     let bestMatch = null;
     let bestScore = 0;
 
@@ -60,20 +148,31 @@ window.onload = function() {
       const questions = Array.isArray(item.question) ? item.question : [item.question];
       for (let q of questions) {
         const qNorm = normalize(q);
-        const userWords = userNorm.split(/\s+/);
+
+        // score based on word overlap
+        const userWords = uNorm.split(/\s+/);
         const faqWords = qNorm.split(/\s+/);
 
-        let score = userWords.reduce((acc, word) => acc + (faqWords.includes(word) ? 1 : 0), 0);
-        if (qNorm.includes(userNorm) || userNorm.includes(qNorm)) score += 5;
+        let score = userWords.reduce((acc, w) => acc + (faqWords.includes(w) ? 1 : 0), 0);
 
-        if (score > bestScore) { bestScore = score; bestMatch = item.answer; }
+        if (qNorm.includes(uNorm) || uNorm.includes(qNorm)) score += 5;
+
+        if (score > bestScore) {
+          bestScore = score;
+          bestMatch = item.answer;
+        }
       }
     }
 
     if (!bestMatch) {
       return {
         text: "I don't have that answer yet. Please use the contact form.",
-        buttons: [{ text: "Contact", url: "https://docs.google.com/forms/d/e/1FAIpQLSecD2LdV2-rGMR-wQJg3kQPxUfPr3BD1pjXRXuo6ZpISyu84g/viewform?pli=1" }]
+        buttons: [
+          {
+            text: "Contact",
+            url: "https://docs.google.com/forms/d/e/1FAIpQLSecD2LdV2-rGMR-wQJg3kQPxUfPr3BD1pjXRXuo6ZpISyu84g/viewform?pli=1"
+          }
+        ]
       };
     }
 
@@ -82,53 +181,68 @@ window.onload = function() {
 
   function typeMessage(container, text, speed = 15, callback) {
     let i = 0;
-    container.innerHTML = "";
-    (function typing() {
-      if (i < text.length) { container.innerHTML += text.charAt(i); i++; setTimeout(typing, speed); }
-      else if (callback) callback();
-    })();
+
+    function typing() {
+      if (i < text.length) {
+        container.innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typing, speed);
+      } else if (callback) {
+        callback();
+      }
+    }
+
+    typing();
   }
 
-  sendBtn.addEventListener('click', () => {
+  function sendMessage() {
     const userText = userInput.value.trim();
     if (!userText) return;
+
     loadFAQ();
+
     chatbox.innerHTML += `<div class="user"><strong>You:</strong> ${userText}</div>`;
     userInput.value = '';
 
     const answer = findAnswer(userText);
+
     const typingDiv = document.createElement("div");
     typingDiv.className = "bot typing";
     typingDiv.innerText = "Bot is typing...";
     chatbox.appendChild(typingDiv);
+
     chatbox.scrollTo({ top: chatbox.scrollHeight, behavior: 'smooth' });
 
     setTimeout(() => {
       typingDiv.remove();
+
       const botDiv = document.createElement("div");
       botDiv.className = "bot";
       chatbox.appendChild(botDiv);
 
-     typeMessage(botDiv, answer.text, 15, () => {  // <-- remove "Bot: "
-  if (answer.buttons) {
-    answer.buttons.forEach(btn => {
-      const link = document.createElement("a");
-      link.href = btn.url;
-      link.target = "_blank";
-      link.className = "bot-button";
-      link.innerText = btn.text;
-      botDiv.appendChild(document.createElement("br"));
-      botDiv.appendChild(link);
-    });
-  }
-});
+      typeMessage(botDiv, answer.text, 15, () => {
+        if (answer.buttons) {
+          answer.buttons.forEach(btn => {
+            const link = document.createElement("a");
+            link.href = btn.url;
+            link.target = "_blank";
+            link.className = "bot-button";
+            link.innerText = btn.text;
+            botDiv.appendChild(document.createElement("br"));
+            botDiv.appendChild(link);
+          });
+        }
+      });
 
       chatbox.scrollTo({ top: chatbox.scrollHeight, behavior: 'smooth' });
     }, 600);
-  });
+  }
 
+  sendBtn.addEventListener('click', sendMessage);
+  userInput.addEventListener("keypress", function(e) {
+    if (e.key === "Enter") sendMessage();
+  });
   userInput.addEventListener("focus", loadFAQ);
-  userInput.addEventListener("keypress", function(e) { if (e.key === "Enter") sendBtn.click(); });
 };
 </script>
 
