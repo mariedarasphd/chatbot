@@ -3,105 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <title>Chatbot</title>
-
 <style>
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #E6F7F7;
-    margin: 0;
-    padding: 20px;
-  }
-
-  h3 {
-    color: #000;
-    margin-bottom: 15px;
-  }
-
-  #chat-container {
-    max-width: 420px;
-    background: #ffffff;
-    border-radius: 12px;
-    padding: 15px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  }
-
-  #chatbox {
-    height: 250px;
-    overflow-y: auto;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 10px;
-    margin-bottom: 10px;
-    background: #fafafa;
-  }
-
-  #input-area {
-    display: flex;
-    gap: 8px;
-  }
-
-  #userInput {
-    flex: 1;
-    padding: 8px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-  }
-
-  #sendBtn {
-    padding: 8px 12px;
-    background-color: #0ABAB5;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-  }
-
-  #sendBtn:hover {
-    background-color: #089e9a;
-  }
-
-  .user {
-    color: #0000ff;
-    margin: 5px 0;
-    text-align: right;
-  }
-
-  .bot {
-    color: #000;
-    margin: 5px 0;
-    text-align: left;
-  }
-
-  .bot-button {
-    display: inline-block;
-    margin-top: 8px;
-    margin-right: 6px;
-    padding: 8px 12px;
-    background-color: #0ABAB5;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 6px;
-    font-size: 14px;
-  }
-
-  .bot-button:hover {
-    background-color: #089e9a;
-  }
-
-  .typing {
-    font-style: italic;
-    color: #777;
-  }
+  body { font-family: Arial, sans-serif; background-color: #E6F7F7; margin: 0; padding: 20px; }
+  h3 { color: #000; margin-bottom: 15px; }
+  #chat-container { max-width: 420px; background: #fff; border-radius: 12px; padding: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+  #chatbox { height: 250px; overflow-y: auto; border: 1px solid #ddd; border-radius: 8px; padding: 10px; margin-bottom: 10px; background: #fafafa; }
+  #input-area { display: flex; gap: 8px; }
+  #userInput { flex: 1; padding: 8px; border-radius: 6px; border: 1px solid #ccc; }
+  #sendBtn { padding: 8px 12px; background-color: #0ABAB5; color: white; border: none; border-radius: 6px; cursor: pointer; }
+  #sendBtn:hover { background-color: #089e9a; }
+  .user { color: #0000ff; margin: 5px 0; text-align: right; }
+  .bot { color: #000; margin: 5px 0; text-align: left; }
+  .bot-button { display: inline-block; margin-top: 8px; margin-right: 6px; padding: 8px 12px; background-color: #0ABAB5; color: #fff; text-decoration: none; border-radius: 6px; font-size: 14px; }
+  .bot-button:hover { background-color: #089e9a; }
+  .typing { font-style: italic; color: #777; }
 </style>
 </head>
-
 <body>
 
 <h3>Ask Me About My Services</h3>
 
 <div id="chat-container">
   <div id="chatbox"></div>
-
   <div id="input-area">
     <input type="text" id="userInput" placeholder="Type a question..." />
     <button id="sendBtn">Send</button>
@@ -110,7 +33,6 @@
 
 <script>
 window.onload = function() {
-
   const chatbox = document.getElementById('chatbox');
   const userInput = document.getElementById('userInput');
   const sendBtn = document.getElementById('sendBtn');
@@ -120,61 +42,55 @@ window.onload = function() {
 
   function loadFAQ() {
     if (faqLoaded) return;
-
-    fetch('https://raw.githubusercontent.com/mariedarasphd/chatbot/main/faq.json', {
-      cache: "force-cache"
-    })
-    .then(response => response.json())
-    .then(data => {
-      faq = data;
-      faqLoaded = true;
-      chatbox.innerHTML += "<div class='bot'>Hi — ask me anything about services.</div>";
-    })
-    .catch(() => {
-      chatbox.innerHTML += "<div class='bot'>Error loading knowledge base.</div>";
-    });
+    fetch('https://raw.githubusercontent.com/mariedarasphd/chatbot/main/faq.json', { cache: "force-cache" })
+      .then(response => response.json())
+      .then(data => {
+        faq = data;
+        faqLoaded = true;
+        chatbox.innerHTML += "<div class='bot'>Hi — ask me anything about services.</div>";
+      })
+      .catch(() => {
+        chatbox.innerHTML += "<div class='bot'>Error loading knowledge base.</div>";
+      });
   }
 
-  function normalize(text) {
-    return text.toLowerCase().trim().replace(/[^\w\s]/gi, "");
+  function normalizeText(text) {
+    return text.toLowerCase().replace(/[^\w\s]/gi, '').trim();
   }
 
-  // Keyword mapping to enforce exact FAQ categories
-  const keywordMap = [
-    {keywords: ["cost", "price", "fees", "pricing", "rate"], category: "pricing"},
-    {keywords: ["website", "web design", "site", "webpage"], category: "website"},
-    {keywords: ["project", "timeline", "duration", "how long", "time to complete"], category: "project"}
-  ];
+  function keywordRoute(question) {
+    const q = normalizeText(question);
+    // Routing keywords to FAQs
+    if (q.match(/\b(cost|price|pricing|fees|rate)\b/)) {
+      return faq.find(item => item.question.some(q => q.toLowerCase().includes('price') || q.toLowerCase().includes('cost')));
+    }
+    if (q.match(/\b(website|web|site|design|development)\b/)) {
+      return faq.find(item => item.question.some(q => q.toLowerCase().includes('website')));
+    }
+    if (q.match(/\b(project|timeline|duration|length)\b/)) {
+      return faq.find(item => item.question.some(q => q.toLowerCase().includes('project')));
+    }
+    if (q.match(/\b(data science|analytics|machine learning|AI|artificial intelligence)\b/)) {
+      return faq.find(item => item.question.some(q => q.toLowerCase().includes('data science') || q.toLowerCase().includes('ai') || q.toLowerCase().includes('machine learning')));
+    }
+    return null;
+  }
 
   function findAnswer(userQuestion) {
-    const normInput = normalize(userQuestion);
+    let routedAnswer = keywordRoute(userQuestion);
+    if (routedAnswer) return routedAnswer.answer;
 
-    // ✅ Check keywords first
-    for (let mapping of keywordMap) {
-      if (mapping.keywords.some(k => normInput.includes(k))) {
-        for (let item of faq) {
-          const questions = Array.isArray(item.question) ? item.question : [item.question];
-          if (questions.some(q => normalize(q).includes(mapping.category))) {
-            return item.answer;
-          }
-        }
-      }
-    }
-
-    // Fallback: fuzzy matching
+    // Fallback fuzzy matching
+    const qInput = normalizeText(userQuestion);
     let bestMatch = null;
     let bestScore = 0;
 
     for (let item of faq) {
       let questions = Array.isArray(item.question) ? item.question : [item.question];
       for (let q of questions) {
-        const qNorm = normalize(q);
-        const userWords = normInput.split(/\s+/);
-        const faqWords = qNorm.split(/\s+/);
-
-        let score = userWords.reduce((acc, word) => acc + (faqWords.includes(word) ? 1 : 0), 0);
-        if (qNorm.includes(normInput) || normInput.includes(qNorm)) score += 5;
-
+        let qNorm = normalizeText(q);
+        let score = qInput.split(/\s+/).reduce((acc, word) => acc + (qNorm.includes(word) ? 1 : 0), 0);
+        if (qNorm.includes(qInput) || qInput.includes(qNorm)) score += 5;
         if (score > bestScore) {
           bestScore = score;
           bestMatch = item.answer;
@@ -185,9 +101,7 @@ window.onload = function() {
     if (!bestMatch) {
       return {
         text: "I don't have that answer yet. Please use the contact form.",
-        buttons: [
-          { text: "Contact", url: "https://docs.google.com/forms/d/e/1FAIpQLSecD2LdV2-rGMR-wQJg3kQPxUfPr3BD1pjXRXuo6ZpISyu84g/viewform?pli=1" }
-        ]
+        buttons: [{ text: "Contact", url: "https://docs.google.com/forms/d/e/1FAIpQLSecD2LdV2-rGMR-wQJg3kQPxUfPr3BD1pjXRXuo6ZpISyu84g/viewform?pli=1" }]
       };
     }
 
@@ -197,24 +111,19 @@ window.onload = function() {
   function typeMessage(container, text, speed = 15, callback) {
     let i = 0;
     container.innerHTML = "";
-
     function typing() {
       if (i < text.length) {
         container.innerHTML += text.charAt(i);
         i++;
         setTimeout(typing, speed);
-      } else if (callback) {
-        callback();
-      }
+      } else if (callback) callback();
     }
-
     typing();
   }
 
-  function sendMessage() {
+  sendBtn.addEventListener('click', () => {
     const userText = userInput.value.trim();
     if (!userText) return;
-
     loadFAQ();
 
     chatbox.innerHTML += `<div class="user"><strong>You:</strong> ${userText}</div>`;
@@ -226,6 +135,7 @@ window.onload = function() {
     typingDiv.className = "bot typing";
     typingDiv.innerText = "Bot is typing...";
     chatbox.appendChild(typingDiv);
+
     chatbox.scrollTo({ top: chatbox.scrollHeight, behavior: 'smooth' });
 
     setTimeout(() => {
@@ -234,7 +144,7 @@ window.onload = function() {
       botDiv.className = "bot";
       chatbox.appendChild(botDiv);
 
-      typeMessage(botDiv, `Bot: ${answer.text}`, 15, () => {
+      typeMessage(botDiv, answer.text, 15, () => {
         if (answer.buttons) {
           answer.buttons.forEach(btn => {
             const link = document.createElement("a");
@@ -250,13 +160,11 @@ window.onload = function() {
 
       chatbox.scrollTo({ top: chatbox.scrollHeight, behavior: 'smooth' });
     }, 600);
-  }
+  });
 
-  sendBtn.addEventListener('click', sendMessage);
-  userInput.addEventListener("keypress", e => { if(e.key === "Enter") sendMessage(); });
   userInput.addEventListener("focus", loadFAQ);
+  userInput.addEventListener("keypress", function(e) { if (e.key === "Enter") sendBtn.click(); });
 };
 </script>
-
 </body>
 </html>
