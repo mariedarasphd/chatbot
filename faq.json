@@ -89,8 +89,15 @@
       "text": "No, I focus on software, web, and analytics services, not on full-scale IT infrastructure or networking."
     }
   },
- {
-  "question": ["What is your price structure?", "How much do you charge?", "Cost?", "Fees", "Pricing", "Rates", "How much does it cost?"],
+{
+  "question": [
+    "What is your price structure?",
+    "How much does it cost?",
+    "Cost?",
+    "Pricing?",
+    "Fees?",
+    "Rates?"
+  ],
   "answer": {
     "text": "I work by a Statement of Work (SOW), priced by project or by hours. You will receive an SOW separate from your contract explaining exactly what to expect at each checkpoint with a payment schedule. You can learn more about the process below:",
     "buttons": [
