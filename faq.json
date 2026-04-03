@@ -131,12 +131,18 @@
       "text": "Marie Daras LLC specializes in fraud detection but can build solutions in consumer goods, retail, healthcare, and others. Scheduling a short call helps determine if we are a good fit."
     }
   },
-  {
-    "question": ["Can you help in CPG?", "CPG solutions?", "Consumer packaged goods", "CPG industry"],
-    "answer": {
-      "text": "Marie Daras LLC specializes in fraud detection but can build solutions in consumer goods, retail, healthcare, and others. Scheduling a short call helps determine if we are a good fit."
-    }
-  },
+ {
+  "question": ["Can you help in CPG?", "CPG solutions?", "Consumer packaged goods", "CPG industry"],
+  "answer": {
+    "text": "Marie Daras LLC specializes in fraud detection but can build solutions in consumer goods, retail, healthcare, and others. You can schedule a short call below to see if we are a good fit:",
+    "buttons": [
+      {
+        "text": "Book a Call",
+        "url": "https://docs.google.com/forms/d/e/1FAIpQLSecD2LdV2-rGMR-wQJg3kQPxUfPr3BD1pjXRXuo6ZpISyu84g/viewform?pli=1"
+      }
+    ]
+  }
+},
   {
     "question": ["Can you help in marketing?", "Marketing solutions?", "Marketing projects", "Advertising"],
     "answer": {
