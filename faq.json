@@ -150,7 +150,16 @@
     }
   },
 {
-  "question": ["How long does it take to build a website?", "Website timeline?", "Website project duration?", "Website development", "Site build time", "Web design duration"],
+  "question": [
+    "How long does it take to build a website?",
+    "How long does a website take?",
+    "Website timeline",
+    "Website build time",
+    "How fast can you build a website",
+    "Time to build a website",
+    "Website development time",
+    "How long for a website"
+  ],
   "answer": {
     "text": "A basic two-page website typically takes about one week to build. Additional services such as custom SEO, content creation, and domain configuration are available as add-ons. You can learn more or schedule a quick discussion below:",
     "buttons": [
