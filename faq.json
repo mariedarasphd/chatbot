@@ -143,10 +143,20 @@
       "text": "Marie Daras LLC specializes in fraud detection but can build solutions in consumer goods, retail, healthcare, and others. Scheduling a short call helps determine if we are a good fit."
     }
   },
-  {
-    "question": ["How long does it take to build a website?", "Website timeline?", "Website project duration?", "Website development", "Site build time", "Web design duration"],
-    "answer": {
-      "text": "A basic two-page website typically takes about one week to build. Additional services such as custom SEO, content creation, and domain configuration are available as add-ons."
-    }
+{
+  "question": ["How long does it take to build a website?", "Website timeline?", "Website project duration?", "Website development", "Site build time", "Web design duration"],
+  "answer": {
+    "text": "A basic two-page website typically takes about one week to build. Additional services such as custom SEO, content creation, and domain configuration are available as add-ons. You can learn more or schedule a quick discussion below:",
+    "buttons": [
+      {
+        "text": "Watch Video",
+        "url": "https://youtu.be/lGpYcix04h0?si=lBjfI7xKGVts3ZJv"
+      },
+      {
+        "text": "Book a Call",
+        "url": "https://docs.google.com/forms/d/e/1FAIpQLSecD2LdV2-rGMR-wQJg3kQPxUfPr3BD1pjXRXuo6ZpISyu84g/viewform?pli=1"
+      }
+    ]
   }
+}
 ]
