@@ -90,7 +90,7 @@
     }
   },
  {
-  "question": ["What is your price structure?", "How much do you charge?", "Cost?", "Fees", "Pricing", "Rates"],
+  "question": ["What is your price structure?", "How much do you charge?", "Cost?", "Fees", "Pricing", "Rates", "How much does it cost?"],
   "answer": {
     "text": "I work by a Statement of Work (SOW), priced by project or by hours. You will receive an SOW separate from your contract explaining exactly what to expect at each checkpoint with a payment schedule. You can learn more about the process below:",
     "buttons": [
