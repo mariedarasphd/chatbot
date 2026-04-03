@@ -7,7 +7,7 @@
 <style>
   body {
     font-family: Arial, sans-serif;
-    background-color: #E6F7F7; /* very light Tiffany blue */
+    background-color: #E6F7F7;
     margin: 0;
     padding: 20px;
   }
@@ -49,7 +49,7 @@
 
   #sendBtn {
     padding: 8px 12px;
-    background-color: #0ABAB5; /* Tiffany blue */
+    background-color: #0ABAB5;
     color: white;
     border: none;
     border-radius: 6px;
@@ -71,6 +71,24 @@
     margin: 5px 0;
     text-align: left;
   }
+
+  /* ✅ NEW: Button styling */
+  .bot-button {
+    display: inline-block;
+    margin-top: 8px;
+    margin-right: 6px;
+    padding: 8px 12px;
+    background-color: #0ABAB5;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 14px;
+  }
+
+  .bot-button:hover {
+    background-color: #089e9a;
+  }
+
 </style>
 </head>
 
@@ -109,7 +127,7 @@ window.onload = function() {
       console.error(err);
     });
 
-  // Robust matching function
+  // Matching function
   function findAnswer(userQuestion) {
     userQuestion = userQuestion.toLowerCase().trim();
     let bestMatch = null;
@@ -123,12 +141,10 @@ window.onload = function() {
         const userWords = userQuestion.split(/\s+/);
         const faqWords = qLower.split(/\s+/);
 
-        // Count exact word matches
         let score = userWords.reduce((acc, word) => {
           return acc + (faqWords.includes(word) ? 1 : 0);
         }, 0);
 
-        // Boost score if full phrase matches
         if (qLower.includes(userQuestion) || userQuestion.includes(qLower)) {
           score += 5;
         }
@@ -140,7 +156,19 @@ window.onload = function() {
       }
     }
 
-    if (bestScore === 0) return "I don't have that answer yet. Please use the contact form.";
+    // ✅ UPDATED fallback (now returns object)
+    if (bestScore === 0) {
+      return {
+        text: "I don't have that answer yet. Please use the contact form.",
+        buttons: [
+          {
+            text: "Contact",
+            url: "https://docs.google.com/forms/d/e/1FAIpQLSecD2LdV2-rGMR-wQJg3kQPxUfPr3BD1pjXRXuo6ZpISyu84g/viewform?pli=1"
+          }
+        ]
+      };
+    }
+
     return bestMatch;
   }
 
@@ -153,7 +181,19 @@ window.onload = function() {
     userInput.value = '';
 
     const answer = findAnswer(userText);
-    chatbox.innerHTML += `<div class="bot"><strong>Bot:</strong> ${answer}</div>`;
+
+    // ✅ NEW rendering logic (supports buttons)
+    let botHTML = `<div class="bot"><strong>Bot:</strong> ${answer.text}`;
+
+    if (answer.buttons) {
+      answer.buttons.forEach(btn => {
+        botHTML += `<br><a href="${btn.url}" target="_blank" class="bot-button">${btn.text}</a>`;
+      });
+    }
+
+    botHTML += `</div>`;
+
+    chatbox.innerHTML += botHTML;
     chatbox.scrollTop = chatbox.scrollHeight;
   });
 
