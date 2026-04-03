@@ -72,7 +72,6 @@
     text-align: left;
   }
 
-  /* ✅ NEW: Button styling */
   .bot-button {
     display: inline-block;
     margin-top: 8px;
@@ -87,6 +86,12 @@
 
   .bot-button:hover {
     background-color: #089e9a;
+  }
+
+  /* ✅ Typing indicator */
+  .typing {
+    font-style: italic;
+    color: #777;
   }
 
 </style>
@@ -114,20 +119,16 @@ window.onload = function() {
 
   let faq = [];
 
-  // Load FAQ JSON
   fetch('https://raw.githubusercontent.com/mariedarasphd/chatbot/main/faq.json')
     .then(response => response.json())
     .then(data => {
       faq = data;
       chatbox.innerHTML += "<div class='bot'>Hi — ask me anything about services.</div>";
-      console.log("FAQ loaded:", faq);
     })
     .catch(err => {
       chatbox.innerHTML += "<div class='bot'>Error loading knowledge base.</div>";
-      console.error(err);
     });
 
-  // Matching function
   function findAnswer(userQuestion) {
     userQuestion = userQuestion.toLowerCase().trim();
     let bestMatch = null;
@@ -156,7 +157,6 @@ window.onload = function() {
       }
     }
 
-    // ✅ UPDATED fallback (now returns object)
     if (bestScore === 0) {
       return {
         text: "I don't have that answer yet. Please use the contact form.",
@@ -172,7 +172,24 @@ window.onload = function() {
     return bestMatch;
   }
 
-  // Send button logic
+  // ✅ Typing function
+  function typeMessage(container, text, speed = 15, callback) {
+    let i = 0;
+    container.innerHTML = "";
+
+    function typing() {
+      if (i < text.length) {
+        container.innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typing, speed);
+      } else if (callback) {
+        callback();
+      }
+    }
+
+    typing();
+  }
+
   sendBtn.addEventListener('click', () => {
     const userText = userInput.value.trim();
     if (!userText) return;
@@ -182,22 +199,52 @@ window.onload = function() {
 
     const answer = findAnswer(userText);
 
-    // ✅ NEW rendering logic (supports buttons)
-    let botHTML = `<div class="bot"><strong>Bot:</strong> ${answer.text}`;
+    // ✅ Add typing indicator
+    const typingDiv = document.createElement("div");
+    typingDiv.className = "bot typing";
+    typingDiv.innerText = "Bot is typing...";
+    chatbox.appendChild(typingDiv);
 
-    if (answer.buttons) {
-      answer.buttons.forEach(btn => {
-        botHTML += `<br><a href="${btn.url}" target="_blank" class="bot-button">${btn.text}</a>`;
+    chatbox.scrollTo({
+      top: chatbox.scrollHeight,
+      behavior: 'smooth'
+    });
+
+    // Simulate delay
+    setTimeout(() => {
+      typingDiv.remove();
+
+      const botDiv = document.createElement("div");
+      botDiv.className = "bot";
+      chatbox.appendChild(botDiv);
+
+      // Type text
+      typeMessage(botDiv, `Bot: ${answer.text}`, 15, () => {
+
+        // Add buttons after typing finishes
+        if (answer.buttons) {
+          answer.buttons.forEach(btn => {
+            const link = document.createElement("a");
+            link.href = btn.url;
+            link.target = "_blank";
+            link.className = "bot-button";
+            link.innerText = btn.text;
+            botDiv.appendChild(document.createElement("br"));
+            botDiv.appendChild(link);
+          });
+        }
+
       });
-    }
 
-    botHTML += `</div>`;
+      chatbox.scrollTo({
+        top: chatbox.scrollHeight,
+        behavior: 'smooth'
+      });
 
-    chatbox.innerHTML += botHTML;
-    chatbox.scrollTop = chatbox.scrollHeight;
+    }, 600); // delay before typing starts
+
   });
 
-  // Enter key support
   userInput.addEventListener("keypress", function(e) {
     if (e.key === "Enter") {
       sendBtn.click();
