@@ -35,12 +35,18 @@
       "text": "Machine learning is a powerful technology that enables computers to learn from data and improve performance over time. It is a subset of artificial intelligence (AI)."
     }
   },
-  {
-    "question": ["What fields can you build software in?", "What industries do you work with for software?", "Where can you develop software?", "Software solutions", "Applications", "Software projects"],
-    "answer": {
-      "text": "Marie Daras LLC specializes in fraud detection but can build solutions in consumer goods, retail, healthcare, and others. Scheduling a short call helps determine if we are a good fit."
-    }
-  },
+ {
+  "question": ["What fields can you build data science models in?", "Industries for data science?", "Where can you apply data science?", "Data projects", "Analytics solutions", "Predictive models"],
+  "answer": {
+    "text": "Marie Daras LLC specializes in fraud detection but can build solutions in consumer goods, retail, healthcare, and others. You can schedule a short call below to see if we are a good fit:",
+    "buttons": [
+      {
+        "text": "Book a Call",
+        "url": "https://docs.google.com/forms/d/e/1FAIpQLSecD2LdV2-rGMR-wQJg3kQPxUfPr3BD1pjXRXuo6ZpISyu84g/viewform?pli=1"
+      }
+    ]
+  }
+},
   {
     "question": ["What fields can you build data science models in?", "Industries for data science?", "Where can you apply data science?", "Data projects", "Analytics solutions", "Predictive models"],
     "answer": {
@@ -95,12 +101,18 @@
       "text": "No, I focus on software, web, and analytics services, not on full-scale IT infrastructure or networking."
     }
   },
-  {
-    "question": ["What is your price structure?", "How much do you charge?", "Cost?", "Fees", "Pricing", "Rates"],
-    "answer": {
-      "text": "I work by a Statement of Work (SOW), priced by project or by hours. You will receive an SOW separate from your contract explaining exactly what to expect at each checkpoint with a payment schedule."
-    }
-  },
+ {
+  "question": ["What is your price structure?", "How much do you charge?", "Cost?", "Fees", "Pricing", "Rates"],
+  "answer": {
+    "text": "I work by a Statement of Work (SOW), priced by project or by hours. You will receive an SOW separate from your contract explaining exactly what to expect at each checkpoint with a payment schedule. You can learn more about the process below:",
+    "buttons": [
+      {
+        "text": "Watch Process Video",
+        "url": "https://youtu.be/mqQeeiViRoI?si=bmBcijqnxFbliZSn"
+      }
+    ]
+  }
+},
   {
     "question": ["What languages do you program in?", "Programming languages?", "Which languages can you code in?", "Coding languages", "Development languages"],
     "answer": {
