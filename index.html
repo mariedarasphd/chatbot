@@ -88,12 +88,10 @@
     background-color: #089e9a;
   }
 
-  /* ✅ Typing indicator */
   .typing {
     font-style: italic;
     color: #777;
   }
-
 </style>
 </head>
 
@@ -118,16 +116,26 @@ window.onload = function() {
   const sendBtn = document.getElementById('sendBtn');
 
   let faq = [];
+  let faqLoaded = false;
 
-  fetch('https://raw.githubusercontent.com/mariedarasphd/chatbot/main/faq.json')
-    .then(response => response.json())
-    .then(data => {
-      faq = data;
-      chatbox.innerHTML += "<div class='bot'>Hi — ask me anything about services.</div>";
+  // ✅ Load FAQ only when user interacts
+  function loadFAQ() {
+    if (faqLoaded) return;
+
+    fetch('https://raw.githubusercontent.com/mariedarasphd/chatbot/main/faq.json', {
+      cache: "force-cache"
     })
-    .catch(err => {
-      chatbox.innerHTML += "<div class='bot'>Error loading knowledge base.</div>";
-    });
+      .then(response => response.json())
+      .then(data => {
+        faq = data;
+        faqLoaded = true;
+
+        chatbox.innerHTML += "<div class='bot'>Hi — ask me anything about services.</div>";
+      })
+      .catch(() => {
+        chatbox.innerHTML += "<div class='bot'>Error loading knowledge base.</div>";
+      });
+  }
 
   function findAnswer(userQuestion) {
     userQuestion = userQuestion.toLowerCase().trim();
@@ -172,7 +180,6 @@ window.onload = function() {
     return bestMatch;
   }
 
-  // ✅ Typing function
   function typeMessage(container, text, speed = 15, callback) {
     let i = 0;
     container.innerHTML = "";
@@ -194,12 +201,13 @@ window.onload = function() {
     const userText = userInput.value.trim();
     if (!userText) return;
 
+    loadFAQ(); // ✅ ensure FAQ is loaded
+
     chatbox.innerHTML += `<div class="user"><strong>You:</strong> ${userText}</div>`;
     userInput.value = '';
 
     const answer = findAnswer(userText);
 
-    // ✅ Add typing indicator
     const typingDiv = document.createElement("div");
     typingDiv.className = "bot typing";
     typingDiv.innerText = "Bot is typing...";
@@ -210,7 +218,6 @@ window.onload = function() {
       behavior: 'smooth'
     });
 
-    // Simulate delay
     setTimeout(() => {
       typingDiv.remove();
 
@@ -218,10 +225,7 @@ window.onload = function() {
       botDiv.className = "bot";
       chatbox.appendChild(botDiv);
 
-      // Type text
       typeMessage(botDiv, `Bot: ${answer.text}`, 15, () => {
-
-        // Add buttons after typing finishes
         if (answer.buttons) {
           answer.buttons.forEach(btn => {
             const link = document.createElement("a");
@@ -233,7 +237,6 @@ window.onload = function() {
             botDiv.appendChild(link);
           });
         }
-
       });
 
       chatbox.scrollTo({
@@ -241,9 +244,11 @@ window.onload = function() {
         behavior: 'smooth'
       });
 
-    }, 600); // delay before typing starts
-
+    }, 600);
   });
+
+  // ✅ Load FAQ when user clicks input (human behavior)
+  userInput.addEventListener("focus", loadFAQ);
 
   userInput.addEventListener("keypress", function(e) {
     if (e.key === "Enter") {
