@@ -109,19 +109,19 @@ window.onload = function() {
       botDiv.className = "bot";
       chatbox.appendChild(botDiv);
 
-      typeMessage(botDiv, `Bot: ${answer.text}`, 15, () => {
-        if (answer.buttons) {
-          answer.buttons.forEach(btn => {
-            const link = document.createElement("a");
-            link.href = btn.url;
-            link.target = "_blank";
-            link.className = "bot-button";
-            link.innerText = btn.text;
-            botDiv.appendChild(document.createElement("br"));
-            botDiv.appendChild(link);
-          });
-        }
-      });
+     typeMessage(botDiv, answer.text, 15, () => {  // <-- remove "Bot: "
+  if (answer.buttons) {
+    answer.buttons.forEach(btn => {
+      const link = document.createElement("a");
+      link.href = btn.url;
+      link.target = "_blank";
+      link.className = "bot-button";
+      link.innerText = btn.text;
+      botDiv.appendChild(document.createElement("br"));
+      botDiv.appendChild(link);
+    });
+  }
+});
 
       chatbox.scrollTo({ top: chatbox.scrollHeight, behavior: 'smooth' });
     }, 600);
