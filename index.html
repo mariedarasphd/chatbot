@@ -118,10 +118,13 @@ window.onload = function() {
   let faq = [];
   let faqLoaded = false;
 
+  // ✅ FIXED: correct external fetch + no caching issues
   function loadFAQ() {
     if (faqLoaded) return;
 
-    fetch('faq.json', { cache: "force-cache" })
+    fetch('https://raw.githubusercontent.com/mariedarasphd/chatbot/main/faq.json', {
+      cache: "no-store"
+    })
       .then(response => response.json())
       .then(data => {
         faq = data;
@@ -225,6 +228,7 @@ window.onload = function() {
 
       typeMessage(botDiv, answer.text, 15, () => {
 
+        // ✅ ANDROID FIX: break out of iframe
         if (answer.buttons) {
           answer.buttons.forEach(btn => {
             const link = document.createElement("a");
