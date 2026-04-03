@@ -110,6 +110,7 @@
 
 <script>
 window.onload = function() {
+
   const chatbox = document.getElementById('chatbox');
   const userInput = document.getElementById('userInput');
   const sendBtn = document.getElementById('sendBtn');
@@ -117,63 +118,62 @@ window.onload = function() {
   let faq = [];
   let faqLoaded = false;
 
-  // ✅ Normalize text: lowercase, remove punctuation and extra spaces
-  function normalizeText(text) {
-    return text
-      .toLowerCase()
-      .replace(/[.,!?;:()"]/g, '')
-      .replace(/\s+/g, ' ')
-      .trim();
-  }
-
-  // Load FAQ from external JSON
-  function loadFAQ(callback) {
-    if (faqLoaded) {
-      if (callback) callback();
-      return;
-    }
+  function loadFAQ() {
+    if (faqLoaded) return;
 
     fetch('https://raw.githubusercontent.com/mariedarasphd/chatbot/main/faq.json', {
       cache: "force-cache"
     })
     .then(response => response.json())
     .then(data => {
-      faq = data.map(item => {
-        // Normalize all FAQ questions ahead of time
-        item.question = item.question.map(q => normalizeText(q));
-        return item;
-      });
+      faq = data;
       faqLoaded = true;
-
       chatbox.innerHTML += "<div class='bot'>Hi — ask me anything about services.</div>";
-
-      if (callback) callback();
     })
     .catch(() => {
       chatbox.innerHTML += "<div class='bot'>Error loading knowledge base.</div>";
     });
   }
 
-  // Find the best matching answer
+  function normalize(text) {
+    return text.toLowerCase().trim().replace(/[^\w\s]/gi, "");
+  }
+
+  // Keyword mapping to enforce exact FAQ categories
+  const keywordMap = [
+    {keywords: ["cost", "price", "fees", "pricing", "rate"], category: "pricing"},
+    {keywords: ["website", "web design", "site", "webpage"], category: "website"},
+    {keywords: ["project", "timeline", "duration", "how long", "time to complete"], category: "project"}
+  ];
+
   function findAnswer(userQuestion) {
-    const normalizedUser = normalizeText(userQuestion);
+    const normInput = normalize(userQuestion);
+
+    // ✅ Check keywords first
+    for (let mapping of keywordMap) {
+      if (mapping.keywords.some(k => normInput.includes(k))) {
+        for (let item of faq) {
+          const questions = Array.isArray(item.question) ? item.question : [item.question];
+          if (questions.some(q => normalize(q).includes(mapping.category))) {
+            return item.answer;
+          }
+        }
+      }
+    }
+
+    // Fallback: fuzzy matching
     let bestMatch = null;
     let bestScore = 0;
 
     for (let item of faq) {
-      for (let q of item.question) {
-        let score = 0;
+      let questions = Array.isArray(item.question) ? item.question : [item.question];
+      for (let q of questions) {
+        const qNorm = normalize(q);
+        const userWords = normInput.split(/\s+/);
+        const faqWords = qNorm.split(/\s+/);
 
-        // Boost exact matches
-        if (normalizedUser === q) {
-          score += 10;
-        }
-
-        // Partial match by words
-        const userWords = normalizedUser.split(' ');
-        const faqWords = q.split(' ');
-
-        score += userWords.reduce((acc, word) => acc + (faqWords.includes(word) ? 1 : 0), 0);
+        let score = userWords.reduce((acc, word) => acc + (faqWords.includes(word) ? 1 : 0), 0);
+        if (qNorm.includes(normInput) || normInput.includes(qNorm)) score += 5;
 
         if (score > bestScore) {
           bestScore = score;
@@ -186,10 +186,7 @@ window.onload = function() {
       return {
         text: "I don't have that answer yet. Please use the contact form.",
         buttons: [
-          {
-            text: "Contact",
-            url: "https://docs.google.com/forms/d/e/1FAIpQLSecD2LdV2-rGMR-wQJg3kQPxUfPr3BD1pjXRXuo6ZpISyu84g/viewform?pli=1"
-          }
+          { text: "Contact", url: "https://docs.google.com/forms/d/e/1FAIpQLSecD2LdV2-rGMR-wQJg3kQPxUfPr3BD1pjXRXuo6ZpISyu84g/viewform?pli=1" }
         ]
       };
     }
@@ -197,7 +194,6 @@ window.onload = function() {
     return bestMatch;
   }
 
-  // Typing effect
   function typeMessage(container, text, speed = 15, callback) {
     let i = 0;
     container.innerHTML = "";
@@ -215,58 +211,50 @@ window.onload = function() {
     typing();
   }
 
-  // Send button
   function sendMessage() {
     const userText = userInput.value.trim();
     if (!userText) return;
 
+    loadFAQ();
+
     chatbox.innerHTML += `<div class="user"><strong>You:</strong> ${userText}</div>`;
     userInput.value = '';
 
-    loadFAQ(() => {
-      const answer = findAnswer(userText);
+    const answer = findAnswer(userText);
 
-      const typingDiv = document.createElement("div");
-      typingDiv.className = "bot typing";
-      typingDiv.innerText = "Bot is typing...";
-      chatbox.appendChild(typingDiv);
+    const typingDiv = document.createElement("div");
+    typingDiv.className = "bot typing";
+    typingDiv.innerText = "Bot is typing...";
+    chatbox.appendChild(typingDiv);
+    chatbox.scrollTo({ top: chatbox.scrollHeight, behavior: 'smooth' });
+
+    setTimeout(() => {
+      typingDiv.remove();
+      const botDiv = document.createElement("div");
+      botDiv.className = "bot";
+      chatbox.appendChild(botDiv);
+
+      typeMessage(botDiv, `Bot: ${answer.text}`, 15, () => {
+        if (answer.buttons) {
+          answer.buttons.forEach(btn => {
+            const link = document.createElement("a");
+            link.href = btn.url;
+            link.target = "_blank";
+            link.className = "bot-button";
+            link.innerText = btn.text;
+            botDiv.appendChild(document.createElement("br"));
+            botDiv.appendChild(link);
+          });
+        }
+      });
 
       chatbox.scrollTo({ top: chatbox.scrollHeight, behavior: 'smooth' });
-
-      setTimeout(() => {
-        typingDiv.remove();
-
-        const botDiv = document.createElement("div");
-        botDiv.className = "bot";
-        chatbox.appendChild(botDiv);
-
-        typeMessage(botDiv, `Bot: ${answer.text}`, 15, () => {
-          if (answer.buttons) {
-            answer.buttons.forEach(btn => {
-              const link = document.createElement("a");
-              link.href = btn.url;
-              link.target = "_blank";
-              link.className = "bot-button";
-              link.innerText = btn.text;
-              botDiv.appendChild(document.createElement("br"));
-              botDiv.appendChild(link);
-            });
-          }
-        });
-
-        chatbox.scrollTo({ top: chatbox.scrollHeight, behavior: 'smooth' });
-      }, 600);
-    });
+    }, 600);
   }
 
   sendBtn.addEventListener('click', sendMessage);
-
-  userInput.addEventListener("keypress", function(e) {
-    if (e.key === "Enter") sendMessage();
-  });
-
-  // Lazy load FAQ when user focuses input
-  userInput.addEventListener("focus", () => loadFAQ());
+  userInput.addEventListener("keypress", e => { if(e.key === "Enter") sendMessage(); });
+  userInput.addEventListener("focus", loadFAQ);
 };
 </script>
 
