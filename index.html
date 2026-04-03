@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Chatbot</title>
-
 <style>
   body {
     font-family: Arial, sans-serif;
@@ -11,12 +10,10 @@
     margin: 0;
     padding: 20px;
   }
-
   h3 {
     color: #000;
     margin-bottom: 15px;
   }
-
   #chat-container {
     max-width: 420px;
     background: #ffffff;
@@ -24,9 +21,8 @@
     padding: 15px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   }
-
   #chatbox {
-    height: 250px;
+    height: 350px;
     overflow-y: auto;
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -34,19 +30,16 @@
     margin-bottom: 10px;
     background: #fafafa;
   }
-
   #input-area {
     display: flex;
     gap: 8px;
   }
-
   #userInput {
     flex: 1;
     padding: 8px;
     border-radius: 6px;
     border: 1px solid #ccc;
   }
-
   #sendBtn {
     padding: 8px 12px;
     background-color: #0ABAB5;
@@ -55,23 +48,19 @@
     border-radius: 6px;
     cursor: pointer;
   }
-
   #sendBtn:hover {
     background-color: #089e9a;
   }
-
   .user {
     color: #0000ff;
     margin: 5px 0;
     text-align: right;
   }
-
   .bot {
     color: #000;
     margin: 5px 0;
     text-align: left;
   }
-
   .bot-button {
     display: inline-block;
     margin-top: 8px;
@@ -83,25 +72,20 @@
     border-radius: 6px;
     font-size: 14px;
   }
-
   .bot-button:hover {
     background-color: #089e9a;
   }
-
   .typing {
     font-style: italic;
     color: #777;
   }
 </style>
 </head>
-
 <body>
 
 <h3>Ask Me About My Services</h3>
-
 <div id="chat-container">
   <div id="chatbox"></div>
-
   <div id="input-area">
     <input type="text" id="userInput" placeholder="Type a question..." />
     <button id="sendBtn">Send</button>
@@ -109,95 +93,53 @@
 </div>
 
 <script>
-// Simple lemmatization dictionary
-const lemmaDict = {
-  "costs": "cost",
-  "pricing": "price",
-  "prices": "price",
-  "projects": "project",
-  "websites": "website",
-  "runs": "run",
-  "builds": "build",
-  "creates": "create"
-};
-
-function lemmatize(word) {
-  return lemmaDict[word] || word;
-}
-
-function normalizeText(text) {
-  return text
-    .toLowerCase()
-    .replace(/[.,!?;:]/g, '') // remove punctuation
-    .split(/\s+/)
-    .map(lemmatize);
-}
-
 window.onload = function() {
   const chatbox = document.getElementById('chatbox');
   const userInput = document.getElementById('userInput');
   const sendBtn = document.getElementById('sendBtn');
 
   let faq = [];
-  let faqLoaded = false;
 
-  function loadFAQ() {
-    if (faqLoaded) return;
-
-    fetch('https://raw.githubusercontent.com/mariedarasphd/chatbot/main/faq.json', {
-      cache: "force-cache"
-    })
-      .then(response => response.json())
-      .then(data => {
-        faq = data;
-        faqLoaded = true;
-
-        chatbox.innerHTML += "<div class='bot'>Hi — ask me anything about services.</div>";
-      })
-      .catch(() => {
-        chatbox.innerHTML += "<div class='bot'>Error loading knowledge base.</div>";
-      });
+  // Helper: remove punctuation & lowercase
+  function normalizeText(str) {
+    return str.toLowerCase().replace(/[^\w\s]/g, '').trim();
   }
 
+  // Load FAQ immediately
+  fetch('https://raw.githubusercontent.com/mariedarasphd/chatbot/main/faq.json', {cache: "force-cache"})
+    .then(res => res.json())
+    .then(data => {
+      faq = data;
+      chatbox.innerHTML += "<div class='bot'>Hi — ask me anything about services.</div>";
+    })
+    .catch(() => {
+      chatbox.innerHTML += "<div class='bot'>Error loading knowledge base.</div>";
+    });
+
   function findAnswer(userQuestion) {
-    const userWords = normalizeText(userQuestion);
+    const normalizedUser = normalizeText(userQuestion);
     let bestMatch = null;
     let bestScore = 0;
 
-    for (let item of faq) {
+    faq.forEach(item => {
       const questions = Array.isArray(item.question) ? item.question : [item.question];
-
-      for (let q of questions) {
-        const faqWords = normalizeText(q);
-
-        // Count overlap
-        let score = userWords.reduce((acc, word) => {
-          return acc + (faqWords.includes(word) ? 1 : 0);
-        }, 0);
-
-        // Exact substring match bonus
-        const qText = q.toLowerCase();
-        const uText = userQuestion.toLowerCase();
-        if (qText.includes(uText) || uText.includes(qText)) {
-          score += 5;
-        }
-
+      questions.forEach(q => {
+        const normalizedQ = normalizeText(q);
+        const userWords = normalizedUser.split(/\s+/);
+        const faqWords = normalizedQ.split(/\s+/);
+        let score = userWords.reduce((acc, word) => acc + (faqWords.includes(word) ? 1 : 0), 0);
+        if (normalizedQ.includes(normalizedUser) || normalizedUser.includes(normalizedQ)) score += 5;
         if (score > bestScore) {
           bestScore = score;
           bestMatch = item.answer;
         }
-      }
-    }
+      });
+    });
 
     if (!bestMatch) {
       return {
         text: "I don't have that answer yet. Please use the contact form.",
-        buttons: [
-          {
-            text: "Contact",
-            url: "https://docs.google.com/forms/d/e/1FAIpQLSecD2LdV2-rGMR-wQJg3kQPxUfPr3BD1pjXRXuo6ZpISyu84g/viewform?pli=1"
-          }
-        ]
+        buttons: [{text: "Contact", url: "https://docs.google.com/forms/d/e/1FAIpQLSecD2LdV2-rGMR-wQJg3kQPxUfPr3BD1pjXRXuo6ZpISyu84g/viewform?pli=1"}]
       };
     }
 
@@ -217,32 +159,25 @@ window.onload = function() {
     typing();
   }
 
-  sendBtn.addEventListener('click', () => {
+  function sendMessage() {
     const userText = userInput.value.trim();
     if (!userText) return;
-
-    loadFAQ();
-
     chatbox.innerHTML += `<div class="user"><strong>You:</strong> ${userText}</div>`;
     userInput.value = '';
-
     const answer = findAnswer(userText);
-
     const typingDiv = document.createElement("div");
     typingDiv.className = "bot typing";
     typingDiv.innerText = "Bot is typing...";
     chatbox.appendChild(typingDiv);
-
-    chatbox.scrollTo({ top: chatbox.scrollHeight, behavior: 'smooth' });
+    chatbox.scrollTo({top: chatbox.scrollHeight, behavior: 'smooth'});
 
     setTimeout(() => {
       typingDiv.remove();
-
       const botDiv = document.createElement("div");
       botDiv.className = "bot";
       chatbox.appendChild(botDiv);
 
-      typeMessage(botDiv, `Bot: ${answer.text}`, 15, () => {
+      typeMessage(botDiv, answer.text, 15, () => {
         if (answer.buttons) {
           answer.buttons.forEach(btn => {
             const link = document.createElement("a");
@@ -256,16 +191,12 @@ window.onload = function() {
         }
       });
 
-      chatbox.scrollTo({ top: chatbox.scrollHeight, behavior: 'smooth' });
-
+      chatbox.scrollTo({top: chatbox.scrollHeight, behavior: 'smooth'});
     }, 600);
-  });
+  }
 
-  userInput.addEventListener("focus", loadFAQ);
-
-  userInput.addEventListener("keypress", function(e) {
-    if (e.key === "Enter") sendBtn.click();
-  });
+  sendBtn.addEventListener('click', sendMessage);
+  userInput.addEventListener("keypress", function(e) { if (e.key === "Enter") sendMessage(); });
 };
 </script>
 
