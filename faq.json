@@ -35,18 +35,6 @@
       "text": "Machine learning is a powerful technology that enables computers to learn from data and improve performance over time. It is a subset of artificial intelligence (AI)."
     }
   },
- {
-  "question": ["What fields can you build data science models in?", "Industries for data science?", "Where can you apply data science?", "Data projects", "Analytics solutions", "Predictive models"],
-  "answer": {
-    "text": "Marie Daras LLC specializes in fraud detection but can build solutions in consumer goods, retail, healthcare, and others. You can schedule a short call below to see if we are a good fit:",
-    "buttons": [
-      {
-        "text": "Book a Call",
-        "url": "https://docs.google.com/forms/d/e/1FAIpQLSecD2LdV2-rGMR-wQJg3kQPxUfPr3BD1pjXRXuo6ZpISyu84g/viewform?pli=1"
-      }
-    ]
-  }
-},
   {
     "question": ["What fields can you build data science models in?", "Industries for data science?", "Where can you apply data science?", "Data projects", "Analytics solutions", "Predictive models"],
     "answer": {
