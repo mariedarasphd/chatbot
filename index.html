@@ -110,7 +110,6 @@
 
 <script>
 window.onload = function() {
-
   const chatbox = document.getElementById('chatbox');
   const userInput = document.getElementById('userInput');
   const sendBtn = document.getElementById('sendBtn');
@@ -118,12 +117,11 @@ window.onload = function() {
   let faq = [];
   let faqLoaded = false;
 
-  // ✅ FIXED: correct external fetch + no caching issues
   function loadFAQ() {
     if (faqLoaded) return;
 
     fetch('https://raw.githubusercontent.com/mariedarasphd/chatbot/main/faq.json', {
-      cache: "no-store"
+      cache: "force-cache"
     })
       .then(response => response.json())
       .then(data => {
@@ -136,11 +134,9 @@ window.onload = function() {
       });
   }
 
+  // Simplified: lowercase, remove punctuation, trim
   function normalize(text) {
-    return text
-      .toLowerCase()
-      .replace(/[^\w\s]/gi, '')
-      .trim();
+    return text.toLowerCase().replace(/[^\w\s]/gi, '').trim();
   }
 
   function findAnswer(userQuestion) {
@@ -150,18 +146,16 @@ window.onload = function() {
 
     for (let item of faq) {
       const questions = Array.isArray(item.question) ? item.question : [item.question];
-
       for (let q of questions) {
         const qNorm = normalize(q);
 
+        // score based on word overlap
         const userWords = uNorm.split(/\s+/);
         const faqWords = qNorm.split(/\s+/);
 
         let score = userWords.reduce((acc, w) => acc + (faqWords.includes(w) ? 1 : 0), 0);
 
-        if (qNorm.includes(uNorm) || uNorm.includes(qNorm)) {
-          score += 5;
-        }
+        if (qNorm.includes(uNorm) || uNorm.includes(qNorm)) score += 5;
 
         if (score > bestScore) {
           bestScore = score;
@@ -176,7 +170,7 @@ window.onload = function() {
         buttons: [
           {
             text: "Contact",
-            url: "https://docs.google.com/forms/d/e/1FAIpQLSecD2LdV2-rGMR-wQJg3kQPxUfPr3BD1pjXRXuo6ZpISyu84g/viewform"
+            url: "https://docs.google.com/forms/d/e/1FAIpQLSecD2LdV2-rGMR-wQJg3kQPxUfPr3BD1pjXRXuo6ZpISyu84g/viewform?pli=1"
           }
         ]
       };
@@ -227,41 +221,28 @@ window.onload = function() {
       chatbox.appendChild(botDiv);
 
       typeMessage(botDiv, answer.text, 15, () => {
-
-        // ✅ ANDROID FIX: break out of iframe
         if (answer.buttons) {
           answer.buttons.forEach(btn => {
             const link = document.createElement("a");
-
-            link.href = "#";
-            link.onclick = function(e) {
-              e.preventDefault();
-              window.top.location.href = btn.url;
-            };
-
+            link.href = btn.url;
+            link.target = "_blank";
             link.className = "bot-button";
             link.innerText = btn.text;
-
             botDiv.appendChild(document.createElement("br"));
             botDiv.appendChild(link);
           });
         }
-
       });
 
       chatbox.scrollTo({ top: chatbox.scrollHeight, behavior: 'smooth' });
-
     }, 600);
   }
 
   sendBtn.addEventListener('click', sendMessage);
-
   userInput.addEventListener("keypress", function(e) {
     if (e.key === "Enter") sendMessage();
   });
-
   userInput.addEventListener("focus", loadFAQ);
-
 };
 </script>
 
