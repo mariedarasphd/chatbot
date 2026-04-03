@@ -118,7 +118,7 @@ window.onload = function() {
   let faq = [];
   let faqLoaded = false;
 
-  // ✅ Load FAQ only when user interacts
+  // ✅ Load FAQ only when needed
   function loadFAQ() {
     if (faqLoaded) return;
 
@@ -137,8 +137,10 @@ window.onload = function() {
       });
   }
 
+  // ✅ FIXED matching logic (intent-aware)
   function findAnswer(userQuestion) {
     userQuestion = userQuestion.toLowerCase().trim();
+
     let bestMatch = null;
     let bestScore = 0;
 
@@ -147,15 +149,33 @@ window.onload = function() {
 
       for (let q of questions) {
         let qLower = q.toLowerCase().trim();
+
         const userWords = userQuestion.split(/\s+/);
         const faqWords = qLower.split(/\s+/);
 
-        let score = userWords.reduce((acc, word) => {
-          return acc + (faqWords.includes(word) ? 1 : 0);
-        }, 0);
+        let score = 0;
 
+        // Base overlap scoring
+        userWords.forEach(word => {
+          if (faqWords.includes(word)) score += 1;
+        });
+
+        // Phrase match boost
         if (qLower.includes(userQuestion) || userQuestion.includes(qLower)) {
           score += 5;
+        }
+
+        // ✅ KEY FIX: intent boosting
+        if (userQuestion.includes("website") && qLower.includes("website")) {
+          score += 5;
+        }
+
+        if (userQuestion.includes("project") && qLower.includes("project")) {
+          score += 3;
+        }
+
+        if (userQuestion.includes("build") && qLower.includes("build")) {
+          score += 2;
         }
 
         if (score > bestScore) {
@@ -180,6 +200,7 @@ window.onload = function() {
     return bestMatch;
   }
 
+  // ✅ Typing animation
   function typeMessage(container, text, speed = 15, callback) {
     let i = 0;
     container.innerHTML = "";
@@ -201,7 +222,7 @@ window.onload = function() {
     const userText = userInput.value.trim();
     if (!userText) return;
 
-    loadFAQ(); // ✅ ensure FAQ is loaded
+    loadFAQ();
 
     chatbox.innerHTML += `<div class="user"><strong>You:</strong> ${userText}</div>`;
     userInput.value = '';
@@ -226,6 +247,7 @@ window.onload = function() {
       chatbox.appendChild(botDiv);
 
       typeMessage(botDiv, `Bot: ${answer.text}`, 15, () => {
+
         if (answer.buttons) {
           answer.buttons.forEach(btn => {
             const link = document.createElement("a");
@@ -237,6 +259,7 @@ window.onload = function() {
             botDiv.appendChild(link);
           });
         }
+
       });
 
       chatbox.scrollTo({
@@ -247,7 +270,7 @@ window.onload = function() {
     }, 600);
   });
 
-  // ✅ Load FAQ when user clicks input (human behavior)
+  // Load FAQ on interaction
   userInput.addEventListener("focus", loadFAQ);
 
   userInput.addEventListener("keypress", function(e) {
