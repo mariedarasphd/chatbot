@@ -109,33 +109,131 @@
 </div>
 
 <script>
-// === Embedded FAQ JSON ===
-const faq = [
-  {
-    "question": ["Welcome", "Hello", "Hi", "Greetings", "Hey", "Good morning", "Good afternoon", "Good evening"],
-    "answer": { "text": "Hi — welcome! Ask me anything about services." }
-  },
-  {
-    "question": ["How do I schedule?", "How can I book a meeting?", "Schedule a call", "Book appointment"],
-    "answer": {
-      "text": "You can schedule using the contact form below:",
-      "buttons": [
-        {
-          "text": "Open Contact Form",
-          "url": "https://docs.google.com/forms/d/e/1FAIpQLSecD2LdV2-rGMR-wQJg3kQPxUfPr3BD1pjXRXuo6ZpISyu84g/viewform?pli=1"
-        }
-      ]
-    }
-  }
-  // ...add the rest of your FAQ items here
-];
-
-let faqLoaded = true; // already loaded
-
 window.onload = function() {
   const chatbox = document.getElementById('chatbox');
   const userInput = document.getElementById('userInput');
   const sendBtn = document.getElementById('sendBtn');
+
+  // Entire FAQ embedded here
+  const faq = [
+    {
+      "question": ["Welcome", "Hello", "Hi", "Greetings", "Hey", "Good morning", "Good afternoon", "Good evening"],
+      "answer": { "text": "Welcome to Marie Daras LLC." }
+    },
+    {
+      "question": ["How do I schedule?", "How can I book a meeting?", "How do I get on your calendar?", "Schedule a call", "Book appointment", "Set up a meeting", "When can I meet"],
+      "answer": {
+        "text": "You can schedule using the contact form below:",
+        "buttons": [
+          { "text": "Open Contact Form", "url": "https://docs.google.com/forms/d/e/1FAIpQLSecD2LdV2-rGMR-wQJg3kQPxUfPr3BD1pjXRXuo6ZpISyu84g/viewform?pli=1" }
+        ]
+      }
+    },
+    {
+      "question": ["What is data science?", "Explain data science", "Can you define data science?", "Data analytics", "Data modeling", "Data insights", "Data analysis"],
+      "answer": { "text": "Data science uses math and programming to extract meaningful insights from data — structured and unstructured — to solve real-world business problems." }
+    },
+    {
+      "question": ["What is AI?", "Explain AI", "Can you define artificial intelligence?", "Artificial intelligence", "Machine intelligence"],
+      "answer": { "text": "AI is the capability of computers and machines to perform tasks that typically require human intelligence, such as learning, reasoning, problem-solving, and decision-making." }
+    },
+    {
+      "question": ["What is machine learning?", "Explain machine learning", "Can you define ML?", "ML", "Predictive modeling", "Learning algorithms"],
+      "answer": { "text": "Machine learning is a powerful technology that enables computers to learn from data and improve performance over time. It is a subset of artificial intelligence (AI)." }
+    },
+    {
+      "question": ["What fields can you build data science models in?", "Industries for data science?", "Where can you apply data science?", "Data projects", "Analytics solutions", "Predictive models", "Industries"],
+      "answer": { "text": "Marie Daras LLC specializes in fraud detection but can build solutions in consumer goods, retail, healthcare, and others. Scheduling a short call helps determine if we are a good fit." }
+    },
+    {
+      "question": ["Do you do database design?", "Can you design databases?", "Database design services?", "Databases", "DB setup", "Database architecture"],
+      "answer": { "text": "No, I focus on software, analytics, and web development. Full-scale database design is outside my services." }
+    },
+    {
+      "question": ["How long does a project take?", "Project timeline?", "Project length?", "Duration of project", "Timeline", "Time to complete"],
+      "answer": {
+        "text": "We offer 6–8 week projects with deliverables at each checkpoint, or 1–2 week flash modeling sessions to diagnose your data systems. Learn more below:",
+        "buttons": [
+          { "text": "Watch Video", "url": "https://youtu.be/mqQeeiViRoI?si=pofxAqQGY30AuWdh" }
+        ]
+      }
+    },
+    {
+      "question": ["What is your business process?", "How do you work?", "Describe your process", "Workflow", "Project approach", "Methodology"],
+      "answer": {
+        "text": "We offer 6–8 week projects with deliverables at each checkpoint, or 1–2 week flash modeling sessions to diagnose your data systems. Learn more below:",
+        "buttons": [
+          { "text": "Watch Video", "url": "https://youtu.be/mqQeeiViRoI?si=pofxAqQGY30AuWdh" }
+        ]
+      }
+    },
+    {
+      "question": ["Can you integrate software with existing systems?", "Software integration?", "Connect software to my systems?", "Connect tools", "System integration", "API connection"],
+      "answer": { "text": "Yes, I specialize in connecting software, websites, and analytics tools to work seamlessly with existing business systems." }
+    },
+    {
+      "question": ["Do you provide ongoing maintenance for websites or software?", "Maintenance services?", "Support for software and websites?", "Updates", "Tech support", "Continuous support"],
+      "answer": { "text": "Yes, I offer ongoing support and updates to ensure your systems and websites continue to function smoothly." }
+    },
+    {
+      "question": ["Do you do IT infrastructure setup?", "IT setup services?", "Can you manage my IT infrastructure?", "Network setup", "IT installation"],
+      "answer": { "text": "No, I focus on software, web, and analytics services, not on full-scale IT infrastructure or networking." }
+    },
+    {
+      "question": ["What is your price structure?", "How much does it cost?", "Cost?", "Pricing?", "Fees?", "Rates?"],
+      "answer": {
+        "text": "I work by a Statement of Work (SOW), priced by project or by hours. You will receive an SOW separate from your contract explaining exactly what to expect at each checkpoint with a payment schedule. You can learn more about the process below:",
+        "buttons": [
+          { "text": "Watch Process Video", "url": "https://youtu.be/mqQeeiViRoI?si=bmBcijqnxFbliZSn" }
+        ]
+      }
+    },
+    {
+      "question": ["What languages do you program in?", "Programming languages?", "Which languages can you code in?", "Coding languages", "Development languages"],
+      "answer": { "text": "R, Python, SQL, Scala, HTML, Java, CSS, JSON-LD, and others as needed." }
+    },
+    {
+      "question": ["What platforms do you use?", "Software platforms?", "Which platforms can you work with?", "Tools", "BI platforms", "Analytics platforms"],
+      "answer": { "text": "We are familiar with most BI and analytics platforms and can adjust to your environment." }
+    },
+    {
+      "question": ["Do you have project references?", "Project references?", "Can I see examples?", "Past work", "Portfolio"],
+      "answer": { "text": "Yes, I can provide project references upon request." }
+    },
+    {
+      "question": ["Can you help in retail?", "Retail solutions?", "Retail industry", "Consumer goods"],
+      "answer": { "text": "Marie Daras LLC specializes in fraud detection but can build solutions in consumer goods, retail, healthcare, and others. Scheduling a short call helps determine if we are a good fit." }
+    },
+    {
+      "question": ["Can you help in healthcare?", "Healthcare solutions?", "Medical industry", "Healthcare projects"],
+      "answer": { "text": "Marie Daras LLC specializes in fraud detection but can build solutions in consumer goods, retail, healthcare, and others. Scheduling a short call helps determine if we are a good fit." }
+    },
+    {
+      "question": ["Can you help in CPG?", "CPG solutions?", "Consumer packaged goods", "CPG industry"],
+      "answer": {
+        "text": "Marie Daras LLC specializes in fraud detection but can build solutions in consumer goods, retail, healthcare, and others. You can schedule a short call below to see if we are a good fit:",
+        "buttons": [
+          { "text": "Book a Call", "url": "https://docs.google.com/forms/d/e/1FAIpQLSecD2LdV2-rGMR-wQJg3kQPxUfPr3BD1pjXRXuo6ZpISyu84g/viewform?pli=1" }
+        ]
+      }
+    },
+    {
+      "question": ["Can you help in marketing?", "Marketing solutions?", "Marketing projects", "Advertising"],
+      "answer": { "text": "Marie Daras LLC specializes in fraud detection but can build solutions in consumer goods, retail, healthcare, and others. Scheduling a short call helps determine if we are a good fit." }
+    },
+    {
+      "question": ["How long does it take to build a website?", "How long does a website take?", "Website timeline", "Website build time", "How fast can you build a website", "Time to build a website", "Website development time", "How long for a website"],
+      "answer": {
+        "text": "A basic two-page website typically takes about one week to build. Additional services such as custom SEO, content creation, and domain configuration are available as add-ons. You can learn more or schedule a quick discussion below:",
+        "buttons": [
+          { "text": "Watch Video", "url": "https://youtu.be/lGpYcix04h0?si=lBjfI7xKGVts3ZJv" },
+          { "text": "Book a Call", "url": "https://docs.google.com/forms/d/e/1FAIpQLSecD2LdV2-rGMR-wQJg3kQPxUfPr3BD1pjXRXuo6ZpISyu84g/viewform?pli=1" }
+        ]
+      }
+    }
+  ];
+
+  chatbox.innerHTML += "<div class='bot'>Hi — ask me anything about services.</div>";
 
   function normalize(text) {
     return text.toLowerCase().replace(/[^\w\s]/gi, '').trim();
@@ -150,9 +248,10 @@ window.onload = function() {
       const questions = Array.isArray(item.question) ? item.question : [item.question];
       for (let q of questions) {
         const qNorm = normalize(q);
+        const userWords = uNorm.split(/\s+/);
+        const faqWords = qNorm.split(/\s+/);
 
-        let score = uNorm.split(/\s+/).reduce((acc, w) => acc + (qNorm.split(/\s+/).includes(w) ? 1 : 0), 0);
-
+        let score = userWords.reduce((acc, w) => acc + (faqWords.includes(w) ? 1 : 0), 0);
         if (qNorm.includes(uNorm) || uNorm.includes(qNorm)) score += 5;
 
         if (score > bestScore) {
@@ -166,10 +265,7 @@ window.onload = function() {
       return {
         text: "I don't have that answer yet. Please use the contact form.",
         buttons: [
-          {
-            text: "Contact",
-            url: "https://docs.google.com/forms/d/e/1FAIpQLSecD2LdV2-rGMR-wQJg3kQPxUfPr3BD1pjXRXuo6ZpISyu84g/viewform?pli=1"
-          }
+          { text: "Contact", url: "https://docs.google.com/forms/d/e/1FAIpQLSecD2LdV2-rGMR-wQJg3kQPxUfPr3BD1pjXRXuo6ZpISyu84g/viewform?pli=1" }
         ]
       };
     }
@@ -184,9 +280,7 @@ window.onload = function() {
         container.innerHTML += text.charAt(i);
         i++;
         setTimeout(typing, speed);
-      } else if (callback) {
-        callback();
-      }
+      } else if (callback) callback();
     }
     typing();
   }
@@ -204,12 +298,10 @@ window.onload = function() {
     typingDiv.className = "bot typing";
     typingDiv.innerText = "Bot is typing...";
     chatbox.appendChild(typingDiv);
-
     chatbox.scrollTo({ top: chatbox.scrollHeight, behavior: 'smooth' });
 
     setTimeout(() => {
       typingDiv.remove();
-
       const botDiv = document.createElement("div");
       botDiv.className = "bot";
       chatbox.appendChild(botDiv);
@@ -236,14 +328,6 @@ window.onload = function() {
   userInput.addEventListener("keypress", function(e) {
     if (e.key === "Enter") sendMessage();
   });
-
-  // Add initial greeting from the bot
-  if (faqLoaded) {
-    const initDiv = document.createElement("div");
-    initDiv.className = "bot";
-    initDiv.innerText = "Hi — ask me anything about services.";
-    chatbox.appendChild(initDiv);
-  }
 };
 </script>
 
