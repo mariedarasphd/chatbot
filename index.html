@@ -120,9 +120,9 @@ window.onload = function() {
   function loadFAQ() {
     if (faqLoaded) return;
 
-    fetch('https://raw.githubusercontent.com/mariedarasphd/chatbot/main/faq.json', {
-      cache: "force-cache"
-    })
+   fetch('https://mariedarasphd.github.io/chatbot/faq.json', {
+  cache: "no-store"
+})
       .then(response => response.json())
       .then(data => {
         faq = data;
