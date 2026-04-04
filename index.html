@@ -109,32 +109,34 @@
 </div>
 
 <script>
+// === Embedded FAQ JSON ===
+const faq = [
+  {
+    "question": ["Welcome", "Hello", "Hi", "Greetings", "Hey", "Good morning", "Good afternoon", "Good evening"],
+    "answer": { "text": "Hi — welcome! Ask me anything about services." }
+  },
+  {
+    "question": ["How do I schedule?", "How can I book a meeting?", "Schedule a call", "Book appointment"],
+    "answer": {
+      "text": "You can schedule using the contact form below:",
+      "buttons": [
+        {
+          "text": "Open Contact Form",
+          "url": "https://docs.google.com/forms/d/e/1FAIpQLSecD2LdV2-rGMR-wQJg3kQPxUfPr3BD1pjXRXuo6ZpISyu84g/viewform?pli=1"
+        }
+      ]
+    }
+  }
+  // ...add the rest of your FAQ items here
+];
+
+let faqLoaded = true; // already loaded
+
 window.onload = function() {
   const chatbox = document.getElementById('chatbox');
   const userInput = document.getElementById('userInput');
   const sendBtn = document.getElementById('sendBtn');
 
-  let faq = [];
-  let faqLoaded = false;
-
-  function loadFAQ() {
-    if (faqLoaded) return;
-
-   fetch('https://mariedarasphd.github.io/chatbot/faq.json', {
-  cache: "no-store"
-})
-      .then(response => response.json())
-      .then(data => {
-        faq = data;
-        faqLoaded = true;
-        chatbox.innerHTML += "<div class='bot'>Hi — ask me anything about services.</div>";
-      })
-      .catch(() => {
-        chatbox.innerHTML += "<div class='bot'>Error loading knowledge base.</div>";
-      });
-  }
-
-  // Simplified: lowercase, remove punctuation, trim
   function normalize(text) {
     return text.toLowerCase().replace(/[^\w\s]/gi, '').trim();
   }
@@ -149,11 +151,7 @@ window.onload = function() {
       for (let q of questions) {
         const qNorm = normalize(q);
 
-        // score based on word overlap
-        const userWords = uNorm.split(/\s+/);
-        const faqWords = qNorm.split(/\s+/);
-
-        let score = userWords.reduce((acc, w) => acc + (faqWords.includes(w) ? 1 : 0), 0);
+        let score = uNorm.split(/\s+/).reduce((acc, w) => acc + (qNorm.split(/\s+/).includes(w) ? 1 : 0), 0);
 
         if (qNorm.includes(uNorm) || uNorm.includes(qNorm)) score += 5;
 
@@ -181,7 +179,6 @@ window.onload = function() {
 
   function typeMessage(container, text, speed = 15, callback) {
     let i = 0;
-
     function typing() {
       if (i < text.length) {
         container.innerHTML += text.charAt(i);
@@ -191,15 +188,12 @@ window.onload = function() {
         callback();
       }
     }
-
     typing();
   }
 
   function sendMessage() {
     const userText = userInput.value.trim();
     if (!userText) return;
-
-    loadFAQ();
 
     chatbox.innerHTML += `<div class="user"><strong>You:</strong> ${userText}</div>`;
     userInput.value = '';
@@ -242,7 +236,14 @@ window.onload = function() {
   userInput.addEventListener("keypress", function(e) {
     if (e.key === "Enter") sendMessage();
   });
-  userInput.addEventListener("focus", loadFAQ);
+
+  // Add initial greeting from the bot
+  if (faqLoaded) {
+    const initDiv = document.createElement("div");
+    initDiv.className = "bot";
+    initDiv.innerText = "Hi — ask me anything about services.";
+    chatbox.appendChild(initDiv);
+  }
 };
 </script>
 
