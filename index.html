@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,7 +27,7 @@
   }
 
   #chatbox {
-    height: 250px;
+    height: 280px;
     overflow-y: auto;
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -114,101 +115,177 @@ window.onload = function() {
   const userInput = document.getElementById('userInput');
   const sendBtn = document.getElementById('sendBtn');
 
-  // ===== Embed your full FAQ here =====
+  const CONTACT_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSecD2LdV2-rGMR-wQJg3kQPxUfPr3BD1pjXRXuo6ZpISyu84g/viewform";
+  const GOOGLE_SCHOLAR_URL = "https://scholar.google.com/citations?hl=en&authuser=2&user=CylBwSQAAAAJ";
+  const ORCID_URL = "https://orcid.org/0009-0004-8860-1181";
+
   const faq = [
     {
       "question": ["Welcome", "Hello", "Hi", "Greetings", "Hey", "Good morning", "Good afternoon", "Good evening"],
-      "answer": {"text": "Welcome to Marie Daras LLC."}
+      "answer": {"text": "Welcome. I'm Dawn Marie Daras — behavioral data scientist and digital evidence consultant. Ask me anything about my services."}
     },
     {
-      "question": ["How do I schedule?", "How can I book a meeting?", "How do I get on your calendar?", "Schedule a call", "Book appointment", "Set up a meeting", "When can I meet"],
-      "answer": {"text": "You can schedule using the contact form below:", "buttons":[{"text":"Open Contact Form","url":"https://docs.google.com/forms/d/e/1FAIpQLSecD2LdV2-rGMR-wQJg3kQPxUfPr3BD1pjXRXuo6ZpISyu84g/viewform"}]}
+      "question": ["Who are you?", "About you", "Tell me about yourself", "Background", "Bio", "About Dawn", "Who is Dawn Marie Daras?"],
+      "answer": {"text": "I'm a behavioral data scientist with 15+ years of experience designing analytics, AI, fraud detection, and risk intelligence solutions at IBM, Microsoft, and beyond. Today I help attorneys, investigators, organizations, and academic researchers uncover hidden patterns inside complex data."}
     },
+    {
+      "question": ["How do I schedule?", "How can I book a meeting?", "How do I get on your calendar?", "Schedule a call", "Book appointment", "Set up a meeting", "When can I meet", "Contact you"],
+      "answer": {"text": "You can schedule using the contact form below:", "buttons":[{"text":"Open Contact Form","url": CONTACT_FORM_URL}]}
+    },
+
+    /* ── SERVICE OVERVIEW ── */
+    {
+      "question": ["What services do you offer?", "What do you do?", "Services", "What kind of work do you do?", "Service offerings", "What are your services?"],
+      "answer": {"text": "I offer three main areas of service:\n\n1) Legal & investigative consulting — digital evidence analysis, insider threat intelligence, fraud and financial crime investigations, identity intelligence, entity resolution, OSINT, and discovery analytics.\n\n2) Behavioral data science — combining behavioral science, data analytics, machine learning, and investigative methodologies to uncover connections, evaluate risk, and translate complex findings into clear narratives.\n\n3) Statistical consulting for dissertations and academic research — supporting graduate students and researchers with study design, data analysis, and publication-ready results."}
+    },
+
+    /* ── LEGAL & INVESTIGATIVE ── */
+    {
+      "question": ["Do you work with attorneys?", "Do you work with law firms?", "Can you help lawyers?", "Legal consulting", "Attorney services", "Law firm support"],
+      "answer": {"text": "Yes. I help attorneys understand behavioral patterns, analyze relationships across interconnected datasets, evaluate fraud indicators and insider threat signals, and translate technical evidence into understandable narratives for legal proceedings."}
+    },
+    {
+      "question": ["Do you work with investigators?", "Can you help investigators?", "Investigator support", "Investigation services"],
+      "answer": {"text": "Yes. I support investigators with digital evidence analysis, fraud and financial crime investigations, identity intelligence, entity resolution, OSINT, and discovery analytics."}
+    },
+    {
+      "question": ["Do you consult for corporations?", "Corporate consulting", "Do you work with companies?", "Corporate clients", "Enterprise consulting"],
+      "answer": {"text": "Yes. I work with organizations on insider threat intelligence, fraud analytics, entity resolution, and risk intelligence — bridging the gap between technology, human behavior, and decision-making."}
+    },
+    {
+      "question": ["What types of cases do you support?", "What kinds of cases?", "Case types", "What matters do you handle?"],
+      "answer": {"text": "I support matters involving: digital evidence analysis, insider threat intelligence, fraud and financial crime investigations, identity intelligence, entity resolution and relationship mapping, OSINT and public information analysis, discovery analytics, and behavioral and narrative intelligence."}
+    },
+
+    /* ── DEFINITIONS — REFRAMED ── */
     {
       "question": ["What is data science?", "Explain data science", "Can you define data science?", "Data analytics", "Data modeling", "Data insights", "Data analysis"],
-      "answer": {"text": "Data science uses math and programming to extract meaningful insights from data — structured and unstructured — to solve real-world business problems."}
+      "answer": {"text": "Data science uses math and programming to extract meaningful insights from data — structured and unstructured — to solve real-world problems. In my work, this means uncovering behavioral signals and risk patterns in complex datasets relevant to legal and investigative matters."}
+    },
+    {
+      "question": ["What is behavioral data science?", "Explain behavioral intelligence", "Behavioral data science", "Behavioral analytics", "Behavioral intelligence"],
+      "answer": {"text": "Behavioral data science combines behavioral science, data analytics, and machine learning to identify patterns in how people act within complex information environments — helping uncover relationships, risk factors, and behavioral signals that traditional analysis may overlook."}
     },
     {
       "question": ["What is AI?", "Explain AI", "Can you define artificial intelligence?", "Artificial intelligence", "Machine intelligence"],
-      "answer": {"text": "AI is the capability of computers and machines to perform tasks that typically require human intelligence, such as learning, reasoning, problem-solving, and decision-making."}
+      "answer": {"text": "AI is the capability of computers and machines to perform tasks that typically require human intelligence — such as learning, reasoning, problem-solving, and decision-making. In my practice, this includes detecting fraud indicators, resolving identities, and mapping relationships across interconnected data."}
     },
     {
       "question": ["What is machine learning?", "Explain machine learning", "Can you define ML?", "ML", "Predictive modeling", "Learning algorithms"],
-      "answer": {"text": "Machine learning is a powerful technology that enables computers to learn from data and improve performance over time. It is a subset of artificial intelligence (AI)."}
+      "answer": {"text": "Machine learning is a subset of AI that enables computers to learn from data and improve performance over time. I use it in applications like fraud detection, insider threat analysis, predictive risk modeling, and behavioral data analysis."}
+    },
+
+    /* ── INVESTIGATIVE DOMAIN DEFINITIONS ── */
+    {
+      "question": ["What is digital evidence analysis?", "Digital evidence", "Digital evidence services", "Explain digital evidence"],
+      "answer": {"text": "Digital evidence analysis involves examining complex datasets — communications, transactions, metadata, and other digital artifacts — to identify patterns, timelines, and relationships relevant to legal and investigative matters."}
     },
     {
-      "question": ["What fields can you build data science models in?", "Industries for data science?", "Where can you apply data science?", "Data projects", "Analytics solutions", "Predictive models", "Industries"],
-      "answer": {"text": "Marie Daras LLC specializes in fraud detection but can build solutions in consumer goods, retail, healthcare, and others. Scheduling a short call helps determine if we are a good fit."}
+      "question": ["What is entity resolution?", "Explain entity resolution", "Entity resolution services", "Identity resolution"],
+      "answer": {"text": "Entity resolution is the process of identifying and linking records that refer to the same person, organization, or event across disparate datasets — critical for fraud investigations, identity intelligence, and relationship mapping."}
     },
     {
-      "question": ["Do you do database design?", "Can you design databases?", "Database design services?", "Databases", "DB setup", "Database architecture"],
-      "answer": {"text": "No, I focus on software, analytics, and web development. Full-scale database design is outside my services."}
+      "question": ["What is insider threat intelligence?", "Insider threats", "Insider threat", "Insider risk"],
+      "answer": {"text": "Insider threat intelligence focuses on identifying behavioral and data-driven signals that may indicate risk from individuals within an organization — such as unusual access patterns, policy violations, or anomalous activity."}
     },
+    {
+      "question": ["What is OSINT?", "Open source intelligence", "Explain OSINT", "Public information analysis"],
+      "answer": {"text": "OSINT — open source intelligence — involves collecting and analyzing publicly available information to identify patterns, relationships, and risk factors relevant to investigations and due diligence."}
+    },
+    {
+      "question": ["What is discovery analytics?", "Discovery support", "Discovery analytics", "Legal discovery", "EDiscovery"],
+      "answer": {"text": "Discovery analytics applies data science techniques to large volumes of information produced during legal discovery — helping attorneys identify relevant documents, patterns, and relationships efficiently."}
+    },
+    {
+      "question": ["What is fraud analytics?", "Fraud detection", "Financial crime", "AML", "Anti-money laundering", "Fraud investigation"],
+      "answer": {"text": "Fraud analytics uses statistical and machine learning methods to detect patterns indicative of fraud or financial crime. I have extensive experience in fraud detection, anti-money laundering (AML), and healthcare fraud analytics across highly regulated environments."}
+    },
+
+    /* ── INDUSTRIES / DOMAINS ── */
+    {
+      "question": ["What industries do you work in?", "What fields can you build data science models in?", "Industries", "Sectors", "Where can you apply data science?", "Industry focus"],
+      "answer": {"text": "I work primarily with legal, investigative, and corporate clients. My background spans financial services, healthcare, technology, and other highly regulated environments. I also provide statistical consulting for academic research. Scheduling a short call helps determine if we are a good fit."}
+    },
+    {
+      "question": ["Can you help in healthcare?", "Healthcare solutions?", "Healthcare projects", "Healthcare analytics", "Medical industry"],
+      "answer": {"text": "Yes. My background includes healthcare fraud analytics and predictive modeling in regulated clinical environments. I can support healthcare-related investigative and analytical matters. Scheduling a short call helps determine if we are a good fit."}
+    },
+    {
+      "question": ["Can you help in financial services?", "Financial services?", "Banking", "Finance industry", "Financial crime", "Financial sector"],
+      "answer": {"text": "Yes. I have extensive experience in financial services — including fraud detection, anti-money laundering (AML), and enterprise risk intelligence. Scheduling a short call helps determine if we are a good fit."}
+    },
+
+    /* ── STATISTICAL CONSULTING FOR DISSERTATIONS ── */
+    {
+      "question": ["Do you do statistical consulting?", "Dissertation help", "Dissertation statistics", "Academic research", "Thesis help", "Statistics help", "Research consulting", "Do you help with dissertations?"],
+      "answer": {"text": "Yes! I offer statistical consulting for dissertations and academic research, including:\n\n• Dissertation statistical analysis using Python, R, SAS, and SPSS\n• Research design and methodology development\n• Hypothesis testing and quantitative modeling\n• Data cleaning, transformation, and validation\n• Predictive modeling and behavioral data analysis\n• Academic publication support and results interpretation\n• Reproducible research workflows and documentation\n\nScheduling an initial consultation helps align on methodology and scope. Book below:", "buttons":[{"text":"Book a Consultation","url": CONTACT_FORM_URL}]}
+    },
+    {
+      "question": ["Which universities do you support?", "What universities?", "Do you work with students?", "Utah universities", "Graduate student support", "Student consulting"],
+      "answer": {"text": "I support graduate students and researchers at Utah State University, University of Utah, Weber State University, Brigham Young University, and Bridgerland Technical College. Students from other institutions are welcome to reach out as well."}
+    },
+    {
+      "question": ["How do dissertation consultations work?", "Consultation process", "How does academic consulting work?", "Dissertation process", "Engagement types"],
+      "answer": {"text": "Engagements are tailored to the scope, methodology, and research requirements of each dissertation or academic project. Options include:\n\n• Dissertation statistical analysis support\n• Research design and methodology consulting\n• Full or partial thesis data analysis assistance\n• Publication-ready results interpretation\n\nFinal scope and pricing are determined after an initial consultation to ensure methodological alignment. Book below:", "buttons":[{"text":"Book a Consultation","url": CONTACT_FORM_URL}]}
+    },
+
+    /* ── PUBLICATIONS & SCHOLARLY WORK ── */
+    {
+      "question": ["Do you have publications?", "Publications", "Can I see your publications?", "Scholar", "Google Scholar", "Research publications", "Academic publications", "Your research", "Published work", "See your publications"],
+      "answer": {"text": "Yes, I have published research in behavioral data science, fraud analytics, and risk intelligence. You can view my Google Scholar profile and ORCID for my full publication record:", "buttons":[
+        {"text":"Google Scholar", "url": GOOGLE_SCHOLAR_URL},
+        {"text":"ORCID Profile", "url": ORCID_URL}
+      ]}
+    },
+    {
+      "question": ["Do you have project references?", "Project references?", "Can I see examples?", "Past work", "Portfolio", "References", "Client references", "Work samples"],
+      "answer": {"text": "Yes, I can provide project references upon request, subject to confidentiality agreements. For academic publications, see my Google Scholar and ORCID profiles below:", "buttons":[
+        {"text":"Google Scholar", "url": GOOGLE_SCHOLAR_URL},
+        {"text":"ORCID Profile", "url": ORCID_URL},
+        {"text":"Contact Form", "url": CONTACT_FORM_URL}
+      ]}
+    },
+
+    /* ── PROCESS & PRICING ── */
     {
       "question": ["How long does a project take?", "Project timeline?", "Project length?", "Duration of project", "Timeline", "Time to complete"],
-      "answer": {"text": "We offer 6–8 week projects with deliverables at each checkpoint, or 1–2 week flash modeling sessions to diagnose your data systems. Learn more below:", "buttons":[{"text":"Watch Video","url":"https://youtu.be/mqQeeiViRoI?si=pofxAqQGY30AuWdh"}]}
+      "answer": {"text": "I offer 6–8 week projects with deliverables at each checkpoint, or 1–2 week flash analysis sessions to diagnose your data systems. Academic consulting engagements vary by scope. Learn more below:", "buttons":[{"text":"Watch Video","url":"https://youtu.be/mqQeeiViRoI?si=pofxAqQGY30AuWdh"}]}
     },
     {
       "question": ["What is your business process?", "How do you work?", "Describe your process", "Workflow", "Project approach", "Methodology"],
-      "answer": {"text": "We offer 6–8 week projects with deliverables at each checkpoint, or 1–2 week flash modeling sessions to diagnose your data systems. Learn more below:", "buttons":[{"text":"Watch Video","url":"https://youtu.be/mqQeeiViRoI?si=pofxAqQGY30AuWdh"}]}
+      "answer": {"text": "My approach combines behavioral science, data science, graph analytics, machine learning, and investigative methodologies to help uncover connections, evaluate risk, and translate complex technical information into clear, actionable insights. Learn more below:", "buttons":[{"text":"Watch Video","url":"https://youtu.be/mqQeeiViRoI?si=pofxAqQGY30AuWdh"}]}
     },
     {
-      "question": ["Can you integrate software with existing systems?", "Software integration?", "Connect software to my systems?", "Connect tools", "System integration", "API connection"],
-      "answer": {"text": "Yes, I specialize in connecting software, websites, and analytics tools to work seamlessly with existing business systems."}
+      "question": ["What is your price structure?", "How much does it cost?", "What is the cost?", "What are your fees?", "Cost?", "Pricing?", "Fees?", "Rates?", "How much do you charge?"],
+      "answer": {"text": "I work by a Statement of Work (SOW), priced by project or by hours. You'll receive an SOW separate from your contract explaining exactly what to expect at each checkpoint with a payment schedule. For academic consulting, final scope and pricing are determined after an initial consultation. Learn more below:", "buttons":[{"text":"Watch Process Video","url":"https://youtu.be/mqQeeiViRoI?si=bmBcijqnxFbliZSn"}]}
     },
+
+    /* ── TOOLS & BACKGROUND ── */
     {
-      "question": ["Do you provide ongoing maintenance for websites or software?", "Maintenance services?", "Support for software and websites?", "Updates", "Tech support", "Continuous support"],
-      "answer": {"text": "Yes, I offer ongoing support and updates to ensure your systems and websites continue to function smoothly."}
-    },
-    {
-      "question": ["Do you do IT infrastructure setup?", "IT setup services?", "Can you manage my IT infrastructure?", "Network setup", "IT installation"],
-      "answer": {"text": "No, I focus on software, web, and analytics services, not on full-scale IT infrastructure or networking."}
-    },
-    {
-      "question": ["What is your price structure?", "How much does it cost?", "Cost?", "Pricing?", "Fees?", "Rates?"],
-      "answer": {"text": "I work by a Statement of Work (SOW), priced by project or by hours. You will receive an SOW separate from your contract explaining exactly what to expect at each checkpoint with a payment schedule. You can learn more about the process below:", "buttons":[{"text":"Watch Process Video","url":"https://youtu.be/mqQeeiViRoI?si=bmBcijqnxFbliZSn"}]}
-    },
-    {
-      "question": ["What languages do you program in?", "Programming languages?", "Which languages can you code in?", "Coding languages", "Development languages"],
-      "answer": {"text": "R, Python, SQL, Scala, HTML, Java, CSS, JSON-LD, and others as needed."}
-    },
-    {
-      "question": ["What platforms do you use?", "Software platforms?", "Which platforms can you work with?", "Tools", "BI platforms", "Analytics platforms"],
-      "answer": {"text": "We are familiar with most BI and analytics platforms and can adjust to your environment."}
-    },
-    {
-      "question": ["Do you have project references?", "Project references?", "Can I see examples?", "Past work", "Portfolio"],
-      "answer": {"text": "Yes, I can provide project references upon request."}
-    },
-    {
-      "question": ["Can you help in retail?", "Retail solutions?", "Retail industry", "Consumer goods"],
-      "answer": {"text": "Marie Daras LLC specializes in fraud detection but can build solutions in consumer goods, retail, healthcare, and others. Scheduling a short call helps determine if we are a good fit."}
-    },
-    {
-      "question": ["Can you help in healthcare?", "Healthcare solutions?", "Medical industry", "Healthcare projects"],
-      "answer": {"text": "Marie Daras LLC specializes in fraud detection but can build solutions in consumer goods, retail, healthcare, and others. Scheduling a short call helps determine if we are a good fit."}
-    },
-    {
-      "question": ["Can you help in CPG?", "CPG solutions?", "Consumer packaged goods", "CPG industry"],
-      "answer": {"text": "Marie Daras LLC specializes in fraud detection but can build solutions in consumer goods, retail, healthcare, and others. You can schedule a short call below to see if we are a good fit:", "buttons":[{"text":"Book a Call","url":"https://docs.google.com/forms/d/e/1FAIpQLSecD2LdV2-rGMR-wQJg3kQPxUfPr3BD1pjXRXuo6ZpISyu84g/viewform"}]}
-    },
-    {
-      "question": ["Can you help in marketing?", "Marketing solutions?", "Marketing projects", "Advertising"],
-      "answer": {"text": "Marie Daras LLC specializes in fraud detection but can build solutions in consumer goods, retail, healthcare, and others. Scheduling a short call helps determine if we are a good fit."}
-    },
-    {
-      "question": ["How long does it take to build a website?", "How long does a website take?", "Website timeline", "Website build time", "How fast can you build a website", "Time to build a website", "Website development time", "How long for a website"],
-      "answer": {"text": "A basic two-page website typically takes about one week to build. Additional services such as custom SEO, content creation, and domain configuration are available as add-ons. You can learn more or schedule a quick discussion below:", "buttons":[{"text":"Watch Video","url":"https://youtu.be/lGpYcix04h0?si=lBjfI7xKGVts3ZJv"},{"text":"Book a Call","url":"https://docs.google.com/forms/d/e/1FAIpQLSecD2LdV2-rGMR-wQJg3kQPxUfPr3BD1pjXRXuo6ZpISyu84g/viewform"}]}
+      "question": ["What tools do you use?", "What technologies do you use?", "Software tools", "Analytical tools", "What platforms do you use?", "Programming languages", "What languages do you code in?"],
+      "answer": {"text": "My toolkit includes Python, R, SAS, SPSS, SQL, Scala, and experience with IBM Watson Analytics and Microsoft Azure AI, among other BI and analytics platforms. I adapt to your environment and data infrastructure as needed."}
     }
   ];
 
-  // ===== Normalize function =====
+  /* ── Matching Engine ── */
   function normalize(text) {
     return text.toLowerCase().replace(/[^\w\s]/gi, '').trim();
   }
 
+  /* Common words that inflate scores across unrelated entries */
+  const STOP_WORDS = new Set([
+    "a","an","the","is","are","was","were","be","been","being","do","does","did",
+    "can","could","will","would","should","you","your","i","me","my","we","our",
+    "in","on","at","for","to","of","with","and","or","not","no","what","how",
+    "who","when","where","why","which","that","this","these","those","it","its",
+    "have","has","had","get","got","about","if","so","as","by","from","up",
+    "work","help","services","consulting","see"
+  ]);
+
   function findAnswer(userQuestion) {
     const uNorm = normalize(userQuestion);
+    const uWords = uNorm.split(/\s+/).filter(w => !STOP_WORDS.has(w));
+
     let bestMatch = null;
     let bestScore = 0;
 
@@ -217,8 +294,9 @@ window.onload = function() {
       for (let q of questions) {
         const qNorm = normalize(q);
 
-        let score = uNorm.split(/\s+/).reduce((acc, w) => acc + (qNorm.includes(w) ? 1 : 0), 0);
+        let score = uWords.reduce((acc, w) => acc + (qNorm.includes(w) ? 1 : 0), 0);
 
+        /* Strong boost for near-exact substring matches */
         if (qNorm.includes(uNorm) || uNorm.includes(qNorm)) score += 5;
 
         if (score > bestScore) {
@@ -228,11 +306,12 @@ window.onload = function() {
       }
     }
 
-    if (!bestMatch) {
+    /* Require a minimum signal to avoid wrong-guess noise */
+    if (!bestMatch || bestScore < 2) {
       return {
-        text: "I don't have that answer yet. Please use the contact form.",
+        text: "I don't have that answer yet, but I'd be happy to discuss it. Please use the contact form below:",
         buttons: [
-          {text:"Contact", url:"https://docs.google.com/forms/d/e/1FAIpQLSecD2LdV2-rGMR-wQJg3kQPxUfPr3BD1pjXRXuo6ZpISyu84g/viewform"}
+          { text: "Contact Form", url: CONTACT_FORM_URL }
         ]
       };
     }
@@ -240,14 +319,24 @@ window.onload = function() {
     return bestMatch;
   }
 
-  function typeMessage(container, text, speed = 15, callback) {
+  /* ── Rendering & Typing Effect ── */
+  function typeMessage(container, text, speed, callback) {
     let i = 0;
+    speed = speed || 15;
     function typing() {
       if (i < text.length) {
-        container.innerHTML += text.charAt(i);
+        const ch = text.charAt(i);
+        /* Render newlines as <br> */
+        if (ch === '\n') {
+          container.innerHTML += '<br>';
+        } else {
+          container.innerHTML += ch;
+        }
         i++;
         setTimeout(typing, speed);
-      } else if (callback) callback();
+      } else if (callback) {
+        callback();
+      }
     }
     typing();
   }
@@ -256,7 +345,7 @@ window.onload = function() {
     const userText = userInput.value.trim();
     if (!userText) return;
 
-    chatbox.innerHTML += `<div class="user"><strong>You:</strong> ${userText}</div>`;
+    chatbox.innerHTML += '<div class="user"><strong>You:</strong> ' + userText.replace(/</g, "&lt;") + '</div>';
     userInput.value = '';
 
     const answer = findAnswer(userText);
@@ -265,30 +354,31 @@ window.onload = function() {
     typingDiv.className = "bot typing";
     typingDiv.innerText = "Bot is typing...";
     chatbox.appendChild(typingDiv);
-    chatbox.scrollTo({ top: chatbox.scrollHeight, behavior: 'smooth' });
+    chatbox.scrollTop = chatbox.scrollHeight;
 
-    setTimeout(() => {
+    setTimeout(function() {
       typingDiv.remove();
       const botDiv = document.createElement("div");
       botDiv.className = "bot";
       chatbox.appendChild(botDiv);
 
-      typeMessage(botDiv, answer.text, 15, () => {
+      typeMessage(botDiv, answer.text, 12, function() {
         if (answer.buttons) {
-          answer.buttons.forEach(btn => {
-            const link = document.createElement("a");
+          answer.buttons.forEach(function(btn) {
+            var br = document.createElement("br");
+            botDiv.appendChild(br);
+            var link = document.createElement("a");
             link.href = btn.url;
             link.target = "_blank";
             link.className = "bot-button";
             link.innerText = btn.text;
-            botDiv.appendChild(document.createElement("br"));
             botDiv.appendChild(link);
           });
         }
       });
 
-      chatbox.scrollTo({ top: chatbox.scrollHeight, behavior: 'smooth' });
-    }, 600);
+      chatbox.scrollTop = chatbox.scrollHeight;
+    }, 500);
   }
 
   sendBtn.addEventListener('click', sendMessage);
@@ -296,8 +386,8 @@ window.onload = function() {
     if (e.key === "Enter") sendMessage();
   });
 
-  // initial greeting
-  chatbox.innerHTML += "<div class='bot'>Hi — ask me anything about services.</div>";
+  /* Initial greeting */
+  chatbox.innerHTML += "<div class='bot'><strong>Bot:</strong> Hi — ask me anything about my services.</div>";
 };
 </script>
 
